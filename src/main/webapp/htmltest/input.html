@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>입력양식1</h1>
+<!-- HTML주석
+form : 입력한 자료를 서버로 보낸다.
+action : 서버페이지 주소
+submit : 입력된 정보를 가지고 서버로 보내는거
+method : "get"방식 -> 4096byte까지만 가능, 주소창에 data가 display됨(보안불가)
+method : "post"방식 -> 자리수 제한 없음, 주소창에 data가 display안됨
+input요소들은 반드시 name을 입력한다.
+......../input1.jsp?userid=test1&username=%ED%99%8D%EC%9D%98%EC%B0%AC
+
+get방식 :
+	1) 주소창에 직접입력하고 enter
+	2) <a href=""></a>
+	3) <form method="get"></fomr>
+	4) <form method생략></fomr>
+	
+post방식 : "post"라는 단어를 작성할때만 post
+
+Restful방식 :
+ -->
+ <a href="../jsptest/input1.jsp?userid=aa&username=bb">a태그는 get방식 요청이다.</a>
+ <hr>
+ 
+<form action="../jsptest/input1.jsp" method="get">
+	id: <input name="userid" value="aa"><br>
+	name : <input name="username"value="bb">
+	<input type="submit" value="서버전송(get)">
+</form>
+
+<hr>
+
+<form action="../jsptest/input1.jsp" method="post">
+	id: <input name="userid" value="aa"><br>
+	name : <input name="username"value="bb">
+	<input type="submit" value="서버전송(post)">
+</form>
+</body>
+</html>

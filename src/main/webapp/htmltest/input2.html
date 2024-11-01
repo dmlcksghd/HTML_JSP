@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 
+inline요소 : 자신의 내용 만큼만 자리를 차지한다. <img>, <a>, <label>
+	width라는 속성을 가질 수 없다.
+block 요소 : 한줄 전체를 차지한다. <div>, <p>, <h1>, ...
+ -->
+<style>
+	label {
+		width: 100px;
+		display: inline-block;
+		background-color: purple;
+		color: white;
+	}
+</style>
+</head>
+<body>
+<h1>입력양식2</h1>
+<h1>입력양식2</h1>
+<p>ppp</p>
+<img src="../resources/images/bear.jpg">
+<!-- 
+여러개의 제목을 묶을 때 fieldset사용
+
+
+ -->
+<form action="">
+	<fieldset>
+		<legend>사용자정보</legend>
+		<label for="userid">id:</label><input id="userid"><br>
+		<label for="username">name:</label><input id="username"><br>
+		<label for="useremail">email:</label><input id=useremail><br>
+	</fieldset>
+	<fieldset>
+		<legend>상품정보</legend>
+		<input>
+		<input>
+		<input>
+	</fieldset>
+</form>
+</body>
+</html>
