@@ -3,24 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <style>
-	/* !important > inline > id > class > 타입(태그이름) */
-	h1 {
-		background-color: orange !important;
-	}
-	
-	#my {
-		background-color: pink;
-		color: white;
-	}
-	
-	.my2 {
-		background-color: skyblue;
-		border: 1px solid grey;
-	}
+/* !important > inline > id > class > 타입(태그이름) */
+h1 {
+	background-color: orange !important;
+}
+
+h1 {
+	background-color: aqua !important;
+}
+
+#my {
+	background-color: pink;
+	color: white;
+}
+
+.my2 {
+	background-color: skyblue;
+	border: 1px solid grey;
+}
+/* div {
+	font-size: 10px;
+} */
+
+/* p {
+	font-size: 50px;
+} */
+.aa {
+	background-color: orange;
+}
+
+p.aa {
+	font-family: "휴먼옛체", "맑음고딕";
+	font-size: 1em;
+}
+
+p.cc {
+	font-family: "휴먼옛체", "맑음고딕";
+	font-size: 2em;
+}
+p.dd {
+	font-family: "Nanum Pen Script", "맑음고딕";
+	font-size: 1.5em;
+	font-weight: bold;
+}	
+</style>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+p.ee {
+	font-family: "Nanum Pen Script", "맑음고딕"
+}
+</style>
 </style>
 </head>
 <body>
-<h1 id="my" class="my2" style="background-color: violet;">Cascading Style Sheet(CSS)</h1>
+	<h1 id="my" class="my2" style="background-color: violet;">Cascading
+		Style Sheet(CSS)</h1>
+	<h2 class="aa">폰트스타일과 사이즈</h2>
+	<div>
+		<p class="aa">굴림체 보통</p>
+		<p class="bb">굴림체 보통</p>
+		<p class="cc">맑은 고딕</p>
+		<p class="dd">웹폰트 링크 태그</p>
+		<p class="ee">웹폰트 import</p>
+	</div>
 </body>
 </html>
