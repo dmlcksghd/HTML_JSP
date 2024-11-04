@@ -3,8 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+/* block요소 */
+header, h1, nav, ul, li {
+	border: 1px dotted gray;
+}
+* {
+	box-sizing: border-box;	/* width=border*2+padding*2+content */
+}
+/* 빈칸은 자손을 의미한다. */
+nav ul {
+	list-style: none;
+}
+ul li {
+	display: inline-block;
+	padding: 20px;
+	margin: 0 20px;
+	border: 1px solid black;
+	width: 150px;
+	text-align: center;
+}
+</style>
 </head>
 <body>
-
+<header>
+	<h1>안녕하세요</h1>
+	<nav>
+	<ul>
+		<li><a href="../emp/empAll.jsp">직원조회</a></li>
+		<li><a href="../emp/empInsert.jsp">직원등록</a></li>
+		<li><a href="../dept/deptAll.jsp">부서조회</a></li>
+		<li><a href="../dept/deptInsert.jsp">부서입력</a></li>
+		<li>menu4</li>
+	</ul>
+	</nav>
+</header>
 </body>
 </html>
