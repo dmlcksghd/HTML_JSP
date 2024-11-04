@@ -36,6 +36,7 @@
 </head>
 <body>
 <div id="contaner">
+	<a href="empAll.jsp">직원조회</a>
 	<h1>직원등록</h1>
 	<form action="empRegister.jsp" method="post">
 		<label>직원번호:</label><input type="number" name="employee_id"><br>

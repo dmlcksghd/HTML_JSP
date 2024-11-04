@@ -1,8 +1,5 @@
 package job;
 
-import java.sql.Date;
-
-import dbtest.EmpDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

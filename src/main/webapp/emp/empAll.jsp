@@ -43,6 +43,7 @@
 </style>
 </head>
 <body>
+<a href="empInsert.jsp">신규직원등록</a>
 <h1>직원목록</h1>
 <table>
 <thead>

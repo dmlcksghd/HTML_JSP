@@ -10,12 +10,49 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import job.JobDTO;
 import util.DBUtil;
 
 //DAO(Data Access Object)
 //Service---->DB에간다. 
 //       <--- 
 public class EmpDAO {
+	
+	Connection conn;
+	PreparedStatement st;
+	ResultSet rs;
+	
+	// 1. 특정 부서의 직원 조회 WHERE DEPARTMENT_ID = ?
+		public List<JobDTO> selectAllJob() {
+			String sql = """
+					SELECT *
+					FROM jobs
+					""";
+			List<JobDTO> jobList = new ArrayList<>();
+			conn = DBUtil.getConnection();
+			try {
+				st = conn.prepareStatement(sql);
+				rs = st.executeQuery();
+				while (rs.next()) {
+					JobDTO job = makeJob(rs);
+					jobList.add(job);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.dbDisconnect(conn, st, rs);
+			}
+			return jobList;
+		}
+		
+		private JobDTO makeJob(ResultSet rs) throws SQLException {
+			JobDTO job = new JobDTO();
+			job.setJob_id(rs.getString("job_id"));
+			job.setJob_title(rs.getString("job_title"));
+			job.setMin_salary(rs.getInt("min_salary"));
+			job.setMax_salary(rs.getInt("max_salary"));
+	        return job;
+		}
 	
 	// 1. 특정 부서의 직원 조회	WHERE DEPARTMENT_ID = ?
 	public List<EmpDTO> searchTarget(int deptid) {
@@ -127,7 +164,7 @@ public class EmpDAO {
 	}
 	public List<EmpDTO> selectAll() {
 		// 모든 직원을 조회하기
-		String sql = "select * from employees ";
+		String sql = "select * from employees order by 1";
 		Connection conn = DBUtil.getConnection();
 		Statement st = null;
 		ResultSet rs = null;
