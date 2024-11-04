@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	
+</style>
+</head>
+<body>
+<h1>수습 국원 지원 양식</h1>
+	<form action="../jsptest/p123Result.jsp">
+		<input type="submit" value="서버전송">
+		<table border="1">
+			<thead>
+				<tr>
+					<th rowspan="3">개인정보</th>
+					<th>이름</th>
+					<td class="mydata">
+						<input name="myname">
+					</td>
+				</tr>
+				<tr>
+					<th>학과/학번</th>
+					<td class="mydata">
+						<input maxlength="15" name="mymajor">
+					</td>
+				</tr>
+				<tr>
+					<th>연락처</th>
+					<td class="mydata">
+						<input maxlength="13" name="myphone">
+					</td>
+				</tr>
+				<tr>
+					<th>지원분야</th>
+					<td colspan="2" class="mydata">
+					<input maxlength="30" size="32" name="myregister">
+					</td>
+				</tr>
+	    	</thead>
+		</table>
+	</form>
+</body>
+</html>
