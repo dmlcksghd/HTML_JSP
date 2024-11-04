@@ -4,12 +4,28 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- external css -->
-<link href="css/external.css" rel="stylesheet">
+<link href="css/external.css" rel="stylesheet" type="text/css">
 <style>
+* {
+	/* 전체 선택자 */
+	margin: 0;
+}
+
+p {
+	/* 태그선택자 */
+	font-style: italic;
+}
+
 #myp {
+	/* ID 선택자: 문서 내에서 유일하다.*/
 	/* internal css */
 	background-color: orange;
 	color: blue;
+}
+.aa {
+/* class 선택자 */
+	border: 1px solid black;
+	padding: 25px;	/* border와 content사이의 간격 */
 }
 </style>
 <script>
@@ -17,7 +33,10 @@
 </script>
 </head>
 <body>
-	<h1>CSS익히기</h1>
+	<h1>CSS익히기(적용 안하기)</h1>
+	<h1 class="aa">CSS익히기(적용)</h1>
+	<h2 class="aa">class 선택자 적용(적용)</h2>
+	<h2>class 선택자 적용(적용 안하기)</h2>
 	<p style="color: blue">1.CSS(브라우저 기본적으로 지원 user agent stylesheet)</p>
 	<p>2-1.사용자정의(inline): 태그에 스타일 직접 설정(권장하지 않음)</p>
 	<p id="myp">2-2.사용자정의(internal)</p>
