@@ -18,7 +18,7 @@ public class JobDAO {
 	ResultSet rs;
 	
 	// 1. 특정 부서의 직원 조회 WHERE DEPARTMENT_ID = ?
-	public List<JobDTO> selectAll() {
+	public List<JobDTO> selectAllJob() {
 		String sql = """
 				SELECT *
 				FROM jobs
