@@ -81,17 +81,25 @@ caption {
 span {
 	color: red;
 }
+
+a.new {
+	display: block;
+	padding: 10px;
+}
 </style>
 </head>
 <body>
 	<div id="container">
 		<header>
-			<h1>다음의 목록은 <span>직원정보</span>입니다.</h1>
+			<h1>
+				다음의 목록은 <span>직원정보</span>입니다.
+			</h1>
 		</header>
 		<main>
 			<section>
 				<div>
-					<a href="empInsert.jsp">신규직원등록</a>
+					<a class="new" href="empInsert.jsp">신규직원등록</a> <a class="new"
+						href="../dept/deptInsert.jsp">신규부서등록</a>
 					<h1>직원목록</h1>
 					<table>
 						<thead>

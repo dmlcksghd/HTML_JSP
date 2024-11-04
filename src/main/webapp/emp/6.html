@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<style>
+#container {
+	border: 1px solid red;
+}
+
+.box {
+	width: 200px;
+	height: 100px;
+	margin: 30px;
+	padding: 10px;
+	border: 1px solid blue;
+}
+
+#first {
+	/* 서로 겹쳐지는 경우 큰쪽으로 겹쳐진다. */
+	margin: 50px;
+}
+</style>
+</body>
+<div id="container">
+	<div class="box" id="first">a</div>
+	<div class="box">b</div>
+	<div class="box">c</div>
+</div>
+</html>
