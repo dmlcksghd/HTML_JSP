@@ -4,7 +4,18 @@
 <meta charset="UTF-8">
 <title>연습문제</title>
 <style>
-	
+table, tr, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 10px;
+}
+caption {
+	caption-side: bottom;
+	text-align: right;
+}
+.col {
+ 	background-color: #e5f6f6;
+}
 </style>
 </head>
 <body>
@@ -13,26 +24,26 @@
 		<thead>
 			<tr>
 				<th>지표</th>
-				<th>2019</th>
-				<th>2020</th>
-				<th>2021</th>
-				<th>2022</th>
+				<th>2019년</th>
+				<th>2020년</th>
+				<th>2021년</th>
+				<th class="col">2022년</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<th>가구수</th>
+				<th>가구 수</th>
 				<td>20,891,348</td>
 				<td>21,484,785</td>
 				<td>22,022,753</td>
-				<td>22,383,187</td>
+				<td class="col">22,383,187</td>
 			</tr>
 			<tr>
-				<th>1인가구</th>
+				<th>1인가구 수</th>
 				<td>6,147,516</td>
 				<td>6,643,354</td>
 				<td>7,165,788</td>
-				<td>7,502,350</td>
+				<td class="col">7,502,350</td>
 			</tr>
 		</tbody>
 	</table>
