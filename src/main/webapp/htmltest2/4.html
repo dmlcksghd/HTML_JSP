@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div {
+	/* 
+	width는 block요소만 사용 가능하다.
+	inline은 content만큼만 자리차지
+	block요소 : div, p, h1, table, tr, ul, li, ...
+	inline요소 : span, img, a, ...
+	 */
+		border: 1px solid blue;
+		width: 100px;
+		display: inline-block;
+	}
+	
+	span {
+		border: 1px solid red;
+		width: 100px;
+		display: inline-block;
+	}
+	section.first, section.second {
+		border: 1px solid gray;
+		padding: 10px;
+	}
+</style>
+</head>
+<body>
+<h1>Block요소와 inline요소</h1>
+<section class="first">
+	<div>A</div>
+	<div>B</div>
+	<div>C</div>
+</section>
+<section class="second">
+	<span>D</span>
+	<span>E</span>
+	<span>F</span>
+</section>
+</body>
+</html>
