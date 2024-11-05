@@ -4,17 +4,22 @@
 <meta charset="UTF-8">
 <title>속성 선택자</title>
 <style>
-   ul {
-		 list-style:square;
-   }
-		li a {
-			line-height:30px;
-			font-size: 14px;
-			color: blue;
-			text-decoration: none;
-		}
+ul {
+	list-style: square;
+}
 
-		/* Do it! 속성 값의 끝 부분이 일치하는 요소에 스타일 지정하기 */
+li a {
+	line-height: 30px;
+	font-size: 14px;
+	color: blue;
+	text-decoration: none;
+}
+
+/* Do it! 속성 값의 끝 부분이 일치하는 요소에 스타일 지정하기 */
+a[href$=".hwp"] {
+	background: url("images/hwp_icon.gif") no-repeat right center;
+	padding-right: 20px;
+}
 
 </style>
 </head>
@@ -25,5 +30,5 @@
 		<li><a href="intro.hwp">hwp 파일</a></li>
 		<li><a href="intro.xls">엑셀 파일</a></li>
 	</ul>
-  </body>
- </html>
+</body>
+</html>
