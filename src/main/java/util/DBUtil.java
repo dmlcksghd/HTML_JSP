@@ -11,8 +11,8 @@ public class DBUtil {
 		Connection conn = null;
 		
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String userId = "hr";
-		String userPass = "hr";
+		String userId = "test";
+		String userPass = "1234";
 		
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");

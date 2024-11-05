@@ -1,11 +1,11 @@
-package customer;
+package CRUDProjects.customer;
 
 import java.sql.Date;
 import java.util.List;
 
-import card.CardsDTO;
+import CRUDProjects.card.CardsDTO;
+import CRUDProjects.account.AccountsDTO;
 
-import account.AccountsDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

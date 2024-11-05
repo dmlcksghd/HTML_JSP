@@ -1,4 +1,4 @@
-package card;
+package CRUDProjects.card;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

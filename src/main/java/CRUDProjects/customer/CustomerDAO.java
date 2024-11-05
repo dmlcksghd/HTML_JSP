@@ -1,4 +1,4 @@
-package customer;
+package CRUDProjects.customer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import card.CardsDTO;
+import CRUDProjects.card.CardsDTO;
+import CRUDProjects.account.AccountsDTO;
 
-import account.AccountsDTO;
 import util.DBUtil;
 
 //

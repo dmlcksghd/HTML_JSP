@@ -1,4 +1,4 @@
-package account;
+package CRUDProjects.account;
 
 import java.util.List;
 

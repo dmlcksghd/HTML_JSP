@@ -1,4 +1,4 @@
-package customer;
+package CRUDProjects.customer;
 
 import java.util.List;
 //
