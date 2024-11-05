@@ -1,6 +1,6 @@
-<%@page import="customer.CustomerDTO"%>
+<%@page import="CRUDProjects.customer.CustomerDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="customer.CustomerService"%>
+<%@page import="CRUDProjects.customer.CustomerService"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

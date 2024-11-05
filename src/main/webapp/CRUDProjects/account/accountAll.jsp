@@ -1,6 +1,6 @@
-<%@page import="account.AccountsDTO"%>
+<%@page import="CRUDProjects.account.AccountsDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="account.AccountsService"%>
+<%@page import="CRUDProjects.account.AccountsService"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -9,9 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Account title</title>
-</head>
-<body>
-<h1>계좌목록</h1>
 <style>
 	body {
 		display: flex;
@@ -44,6 +41,9 @@
 		background-color: #e0e0e0;
 	}
 </style>
+</head>
+<body>
+<h1>계좌목록</h1>
 <table>
 <thead>
 	<tr>

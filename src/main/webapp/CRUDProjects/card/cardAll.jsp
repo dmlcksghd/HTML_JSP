@@ -1,6 +1,6 @@
-<%@page import="card.CardsDTO"%>
+<%@page import="CRUDProjects.card.CardsDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="card.CardsService"%>
+<%@page import="CRUDProjects.card.CardsService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
