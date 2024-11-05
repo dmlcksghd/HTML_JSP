@@ -5,13 +5,22 @@
   <title>상품 소개 페이지</title>  
   <style>     
     /* Do it! em 단위로 글자 크기 지정하기 */
+    /* 글자 폰트의 M사이즈가 1em으로 놓고 상대적으로 값을 계산 */
     p {
       font-size: 1em;
+    }
+    div.my{
+    	font-size: 16px;
+    }
+    .content {
+    /* em은 부모의 크기에 영향을 받음 */
+    	font-size: 2em;
     }
   </style>
 </head>
 <body>
   <h1>레드향</h1>
+  <div class="my">고정사이즈</div>
   <p>껍질에 붉은 빛이 돌아 레드향이라 불린다.</p>
   <div class="content">    
     <p>레드향은 한라봉과 귤을 교배한 것으로</p>
