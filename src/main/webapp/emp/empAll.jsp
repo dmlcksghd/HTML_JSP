@@ -67,6 +67,10 @@ tbody tr:nth-child(2n+1) {
 	background-color: #e0e0e0;
 }
 
+tbody td:nth-child(7)[data-fname$='홍'] {
+	color: purple;
+}
+
 caption {
 	font-family: "Nanum Pen Script", "맑음고딕";
 	font-weight: 400;
@@ -105,6 +109,7 @@ a.new {
 						<thead>
 							<tr>
 								<caption>직원번호</caption>
+								<th>직원번호</th>
 								<th>firstName</th>
 								<th>lastName</th>
 								<th>email</th>
@@ -125,7 +130,7 @@ a.new {
 							%>
 							<tr>
 								<td><%=emp.getEmployee_id()%></td>
-								<td><%=emp.getFirst_name()%></td>
+								<td data-fname="<%=emp.getFirst_name()%></td>"><%=emp.getFirst_name()%></td>
 								<td><%=emp.getLast_name()%></td>
 								<td><%=emp.getEmail()%></td>
 								<td><%=emp.getPhone_number()%></td>
