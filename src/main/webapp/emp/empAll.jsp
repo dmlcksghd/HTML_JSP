@@ -91,6 +91,9 @@ a.new {
 	padding: 10px;
 }
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js
+"></script>
 </head>
 <body>
 	<div id="container">
@@ -100,6 +103,9 @@ a.new {
 			</h1>
 		</header>
 		<main>
+		<section>
+			<button class="btn btn-primary">조회</button>
+		</section>
 			<section>
 				<div>
 					<a class="new" href="empInsert.jsp">신규직원등록</a> <a class="new"
