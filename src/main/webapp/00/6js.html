@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</head>
+
+<script>
+	function f2() {
+		var su = prompt("3의 배수를 입력하세요", 3);
+		var obj = document.getElementById("here");
+		console.log(su);
+		if (su != null && su % 3 == 0) {
+			obj.innerHTML = "3의 배수입니다.";
+		} else {
+			obj.innerHTML = "3의 배수가 아닙니다.";
+		}
+	}
+	function f3() {
+		var su = prompt("3의 배수를 입력하세요", 3);
+		var obj = document.getElementById("here");
+		obj.innerHTML = (su != null && su % 3 === 0) ? "3의 배수이다."
+				: "3의 배수가아니다."
+	}
+	function f4() {
+		// input태그는 value 속성의 값을 가지고 있다.
+		var su = document.getElementById("inputValue").value;
+		var total = 0;
+		for (var i = 1; i <= su; i++) {
+			total += i;
+		}
+		// <div><h1>5050</h1></div> 태그 사이의 content는 innerHTML
+		// <div>5050</div> 태그 사이의 content는 innerText
+		document.querySelector("#here").innerText = "<h1> " + i + "=>" + total;
+	}
+	function f5() {
+		var output = "<h1>구구단</h1>";
+		for (var x = 2; x <= 9; x++) {
+			output += `${x}<br>`;
+			for (var y = 1; y <= 9; y++) {
+				document.querySelector("#here").innerHTML = output;
+				output += `${x} X ${y} = ${x*y}<br>`; //백틱
+			}
+			output += "<br>"
+		}
+	}
+	function f6() {
+	    var output2 = "<h1>구구단</h1>";
+	    output2 += "<table>";
+
+	    // 테이블 헤더 생성
+	    var outputTH = "<tr>";
+	    for (var dan = 2; dan <= 9; dan++) {
+	        outputTH += `<th>${dan}단</th>`;
+	    }
+	    outputTH += "</tr>";
+	    output2 += outputTH;
+
+	    // 구구단 내용 생성
+	    for (var x = 1; x <= 9; x++) {
+	        output2 += "<tr>";
+	        for (var y = 2; y <= 9; y++) {
+	            output2 += `<td>${y} X ${x} = ${x * y}</td>`;
+	        }
+	        output2 += "</tr>";
+	    }
+
+	    output2 += "</table>";
+
+	    document.querySelector("#here").innerHTML = output2;
+	}
+	function f7() {
+	    // 학생 목록 문자열을 배열로 변환
+	    const students = "김정은.한승보.류혜진.전운종.유성훈.임서희.김신영.윤성웅.한종현.송재명.홍의찬.박은수.박시현.김광진.정민영.이태한.김용범.박은지.정홍택.박설.정재윤.김은정.강은영.신승균.";
+	    let studentList = students.split(".").filter(name => name !== "");
+
+	    // 4행 8열 좌석 배열 생성
+	    let seating = Array.from({ length: 4 }, () => new Array(8).fill(null));
+
+	    // 비워둘 자리 설정
+	    const emptySeats = [
+	        [0, 7], [1, 0], [3, 0], [3, 6]
+	    ];
+
+	    // 비워둘 자리를 "X"로 설정
+	    for (let i = 0; i < emptySeats.length; i++) {
+	        const row = emptySeats[i][0];
+	        const col = emptySeats[i][1];
+	        seating[row][col] = "X";
+	    }
+
+	    // 나머지 자리에 학생 이름을 랜덤하게 배치
+	    for (let i = 0; i < seating.length; i++) {
+	        for (let j = 0; j < seating[i].length; j++) {
+	            if (seating[i][j] === null && studentList.length > 0) {
+	                const randomIndex = Math.floor(Math.random() * studentList.length);
+	                seating[i][j] = studentList[randomIndex];
+	                studentList.splice(randomIndex, 1);
+	            }
+	        }
+	    }
+
+	    // HTML 테이블 생성
+	    const table = document.createElement("table");
+	    table.style.borderCollapse = "collapse"; // 테두리 병합
+
+	    seating.forEach(row => {
+	        const tr = document.createElement("tr");
+	        row.forEach(cell => {
+	            const td = document.createElement("td");
+	            td.style.border = "1px solid black";
+	            td.style.padding = "8px";
+	            td.style.textAlign = "center";
+	            td.textContent = cell || ""; // 이름이 없으면 빈 문자열
+	            tr.appendChild(td);
+	        });
+	        table.appendChild(tr);
+	    });
+
+	    // 기존 내용을 비우고 새 테이블 추가
+	    const seatingArea = document.getElementById("seatingArea");
+	    seatingArea.innerHTML = ""; // 기존 내용을 비웁니다.
+	    seatingArea.appendChild(table);
+	}
+
+
+	
+
+</script>
+<body>
+	<h1>JS 기본 문법</h1>
+	<button onclick="f1()" class="btn btn-primary">data타입</button>
+	<button onclick="f2()" class="btn btn-primary">if 조건문</button>
+	<button onclick="f3()" class="btn btn-primary">삼항연산자</button>
+	<div class="col-auto">
+		<input type="text" id="inputValue" placeholder="~까지 합계">
+		<button onclick="f4()" class="btn btn-primary">for반복문</button>
+	</div>
+	<button onclick="f5()" class="btn btn-primary">반복문(구구단)</button>
+	<button onclick="f6()" class="btn btn-primary">반복문(구구단2)</button>
+	<button onclick="f7()" class="btn btn-primary">우리반</button>
+
+	<hr>
+	<div id="here">여기</div>
+	<script>
+		//internal JavaScript
+		//Script를 실행하기 전에 호이스팅을한다. var, function정의를 맨 처음 실행한다.
+		f1();
+		console.log("score= " + score); // undefined(타입이 결정되지 않음)
+		//console.log("subject= " + subject); // not defined(오류)
+		var score = 100;
+		subject = "JavaScript";
+		console.log("score= " + score); // 100
+		function f1() {
+			//선언적함수
+			//data type : number, string, object, null, undefined
+			console.log("obj= " + obj); // undefined
+			var obj = document.getElementById("here");
+			obj.innerHTML = "<p> data type : number, string, object, null, undefined </p>";
+
+		}
+	</script>
+	<script>
+		console.log("score2= " + score);
+		console.log("subject= " + subject);
+	</script>
+</body>
+</html>
