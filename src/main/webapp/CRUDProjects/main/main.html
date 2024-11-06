@@ -3,13 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <style>
 a {
 	text-decoration: none;
@@ -30,10 +23,12 @@ table {
 	text-align: center;
 	border: 1px solid gray;
 	background-color: #f9f9f9;
+	border-collapse: collapse;
 }
 
 th {
 	padding: 10px;
+	border: 1px solid gray;
 }
 
 th:hover {
@@ -53,23 +48,20 @@ p {
 	<h1>은행 계좌 & 카드 관리 시스템</h1>
 	<hr>
 	<p>
-		<strong>Customer Menu</strong>
+		<strong>Menu</strong>
 	</p>
 	<table>
 		<thead>
 			<tr>
-				<th><a href="customerAll.jsp">모든 고객 조회</a></th>
-				<th><a href="accountMain.html">특정 고객 조회</a></th>
-				<th><a href="cardMain.html">추가</a></th>
-				<th><a href="transactionMain.html">이메일 수정</a></th>
-				<th><a href="historyMain.html">삭제</a></th>
-				<th><a href="main.html">메인메뉴 돌아가기</a></th>
+				<th><a href="../customer/customerMain.html">고객관리</a></th>
+				<th><a href="accountMain.html">계좌관리</a></th>
+				<th><a href="cardMain.html">카드관리</a></th>
+				<th><a href="transactionMain.html">거래내역관리</a></th>
+				<th><a href="historyMain.html">카드기록관리</a></th>
 			</tr>
 		</thead>
 		<tbody>
 		</tbody>
 	</table>
-</body>
-</html>
 </body>
 </html>

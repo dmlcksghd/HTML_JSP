@@ -1,55 +1,16 @@
-<%@page import="CRUDProjects.customer.CustomerDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="CRUDProjects.customer.CustomerService"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="CRUDProjects.customer.CustomerService"%>
+<%@page import="CRUDProjects.customer.CustomerDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>고객 목록</title>
-<style>
-body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	margin-top: 20px;
-}
-
-h1 {
-	color: #333;
-}
-
-table {
-	width: 80%;
-	border-collapse: collapse;
-	margin-top: 10px;
-}
-
-table, th, td {
-	border: 1px, solid, #ddd;
-	padding: 8px;
-	text-align: center;
-}
-
-th {
-	background-color: #f2f2f2;
-	color: #333;
-}
-
-tr:nth-child(even) {
-	background-color: #f9f9f9;
-}
-
-tr:hover {
-	background-color: #e0e0e0;
-}
-</style>
+<title>Insert title here</title>
 </head>
 <body>
-	<h1>모든고객 조회 목록</h1>
+	<h1>특정고객 조회 목록</h1>
 	<table>
 		<thead>
 			<tr>
@@ -64,11 +25,9 @@ tr:hover {
 		<tbody>
 			<%
 			CustomerService customerService = new CustomerService();
-			List<CustomerDTO> customerlist = customerService.getAllCustomers();
+			CustomerDTO customer = customerService.getCustomerById(customerId, fullName);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-			if (customerlist != null && !customerlist.isEmpty()) {
-				for (CustomerDTO customer : customerlist) {
 			%>
 			<tr>
 				<td><%=customer.getCustomerId()%></td>
@@ -79,8 +38,7 @@ tr:hover {
 				<td><%=customer.getUpdatedAt() != null ? sdf.format(customer.getUpdatedAt()) : "N/A"%></td>
 			</tr>
 			<%
-			}
-			} else {
+			
 			%>
 			<tr>
 				<td colspan="6">고객 데이터가 없습니다.</td>
