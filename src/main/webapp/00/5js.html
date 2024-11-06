@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	function call1() {
+		alert("메시지 창 보여주는 함수");
+	}
+	function call2() {
+		result = confirm("계속하시겠습니까?");
+		alert(result);
+	}
+	function call3() {
+		age = prompt("나이를 입력하세요", 20);
+		alert(Number(age) + 2);
+	}
+	function call3() {
+		age = prompt("나이를 입력하세요", 20);
+		alert(Number(age) + 2);
+	}
+	function call4() {
+		//document.write("Body부분에 문자를 출력한다.")
+		//document.write("Body부분에 문자를 출력한다.")
+		document.querySelector("#here").innerHTML = "here의 문자열 출력";
+		document.querySelector(".here2").innerHTML = "here2의 문자열 출력";
+	}
+	function call5() {
+		document.querySelector("#here").innerHTML = age + "...나이";
+		// 변수선언
+		// var붙이면 지역변수, 없으면 전역변수
+		// 값이 할당되면 타입이 결정된다.
+		var a = 100;
+		b = 200;	// var 없으면 할당시에 변수가 만들어진다.
+		call6();
+	}
+	function call6() {
+		// a is not defined : 다른함수지역의 변수는 접근 불가
+		document.querySelector("#here").innerHTML = b;
+	}
+	function call7(){
+		// 자바스크립트 : 호이스팅을 먼저 하고 실행은 순서대로 실행함
+		// var이 붙어있는선언을 가장 위로 올려서 먼저 수행함.
+		console.log(score + "=>" + typeof(score));	// undefined
+		var score = 100;	
+		console.log(score + "=>" + typeof(score));	// number
+		score = 'A학점';
+		console.log(score + "=>" + typeof(score));	// string
+		score = 10>20;
+		console.log(score + "=>" + typeof(score));	// boolean
+		score = null;	// 값이 유효하지 않다.
+		console.log(score + "=>" + typeof(score));	// object
+		// 배열은 하나의 변수 이름으로 여러가지 타입의 값을 묶음, 접근시에 index이용
+		score = [10, 20, 30, "A학점", 'B학점', 10>20 , function(){}, {}, [1, 2, 3]];
+		console.log(score + "=>" + typeof(score));	// object
+		score = {};	// javaScript Object
+		console.log(score + "=>" + typeof(score));	// object
+		score = function() {};
+		console.log(score + "=>" + typeof(score));	// function
+	}
+	function call8() {
+		var aa = document.getElementById("here");
+		aa.innerHTML = "<br>0: " + (3 == '3');	// 값 비교
+		here.innerHTML += "<br>1: " + (3 === '3');	// 값과 타입을 비교
+		var a = 100;
+		var b = "100";
+		here.innerHTML = "결과는" + (a>100 || ++b>=200);
+		here.innerHTML = "<br> b= " + b;
+	}
+	function call9() {
+		var a = 100;
+		var b = 200;
+		// &&는 앞의 결과가 false이면 뒤의 문장은 수행하지 않음
+		// ||는 앞의 결과가 true이면 뒤의 문장은 수행하지 않음
+		here.innerHTML = "결과는 " + (a<100 && ++b>=200);
+		here.innerHTML = "<br> b = " + b;
+	}
+</script>
+<style>
+</style>
+</head>
+<body>
+	<h1>JavaScript 연습</h1>
+	<button onclick="call1()">alert함수</button>
+	<button onclick="call2()">confirm함수</button>
+	<button onclick="call3()">prompt함수</button>
+	<button onclick="call4()">write함수 또는 innerHTML</button>
+	<button onclick="call5()">변수선언1</button>
+	<button onclick="call6()">변수선언2</button>
+	<button onclick="call7()">데이터타입</button>
+	<button onclick="call8()">비교연산자</button>
+	<button onclick="call9()">논리연산자</button>
+	<div id="here">여기</div>
+	<div class="here2">여기2</div>
+</body>
+</html>

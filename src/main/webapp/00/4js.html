@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script>
-// internal JavaScript : HTML문서내의 작성
+<script src="external.js">
+	// internal JavaScript : HTML문서내의 작성
 	alert("1.head에서 작성");
 	console.log("1.head에서 작성 / 개발자 도구에서 확인 가능");
 </script>
 <style>
-	h1 { background-color: oragne; }
+h1 {
+	background-color: oragne;
+}
 </style>
 </head>
 <body>
@@ -19,6 +21,7 @@
 	</script>
 	<!-- inline JavaScript(권장안함) -->
 	<h1 onclick="alert('h1클릭함')">JavaScript연습</h1>
+	<h1 onclick="call()">JavaScript연습</h1>
 	<h1>자바스크립트 연습</h1>
 	<script>
 		alert("3.body 뒷부분에서 작성");
