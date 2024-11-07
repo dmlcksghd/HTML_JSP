@@ -126,7 +126,10 @@ function f1() {
 		var f = function() {
 			document.querySelector("#here").innerText = new Date();
 		};
-		setInterval(f, 1000);
+		timerId = setInterval(f, 1000);
+	}
+	function f10_stop() {
+		clearInterval(timerId);
 	}
 	function f11() {
 		var aa = reaturnFunc();
@@ -207,6 +210,7 @@ function f1() {
 <button onclick="f7()">가변인자</button>
 <!-- 콜백함수: 함수를 파라메타(아규먼트 = 매개변수)로 보내고 받은쪽에서 사용 -->
 <button onclick="f10()">콜백함수(현재시각을 출력)</button>
+<button onclick="f10_stop()">콜백함수(현재시각을 출력중지)</button>
 <!-- 클로저: 규칙을 위반하고 싶을 때 클로저사용
 (함수 안의 지역변수는 함수 외부에서 사용 불가능: ES6이상에서 let, forEach()사용 / 
 지역변수는 함수 실행 시 생성되고 종료시 사라짐: 지역변수 담아서 함수 return) -->
