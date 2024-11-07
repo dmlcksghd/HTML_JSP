@@ -47,11 +47,163 @@ function f1() {
 		}
 		return result;
 	}
+	
+	function f3() {
+		var x = document.querySelector("#input1").value;
+		var y = document.querySelector("#input2").value;
+		var op = document.querySelector("#op").value;
+		var result = eval(x + op + y);	// "100" + "200"
+		document.querySelector("#result").value = result;
+		
+	}
+	//1. 선언적함수 : 이름이 있는 함수
+	function f4() {
+		// 2. 익명함수(이름이 없는 함수) -> 함수가 변수에 할당됨,
+		var add = function(a, b){ return a+b;};
+		var result = add(10, 20);
+		document.querySelector("#here").innerText = result;
+	}
+	function f5() {
+		// 3. 즉시실행함수
+		var result = (function(a, b){ return a+b;})(30, 40);
+		document.querySelector("#here").innerText = result;
+	}
+	function f6() {
+		// var result = (function(a, b) { return a+b; })(1, 2);
+		// 함수를 정의
+		var f = (a, b) => a+b;
+		
+		// 함수 호출
+		var result = f(1, 2);
+		document.querySelector("#here").innerText = result;
+		
+		//document.querySelector("#here").innerText = f(1, 2);
+
+	}
+	
+	// 같은 이름의 함수가 여러개 있을 경우 가장 마지막에 정의된 함수가 실행됨
+	function call() {
+		document.querySelector("#here").innerText = "1";
+	}
+	function call() {
+		document.querySelector("#here").innerText = "2";
+		function 내부함수() {
+			alert("함수내의 함수: 선언적 내부함수");
+		}
+		// literal로 함수를 할당한 경우는 반드시 할당 후 호출해야 호출가능
+		var f = function() { alert("함수내의 익명함수"); }
+	}
+	function f7() {
+		var result = sumAll(10, 20, 30);
+		document.querySelector("#here").innerText = result;
+	}
+	function sumAll(a, b, c) {
+		// arguments => [10, 20, 30]
+		var result = 0;
+		for(let i=0; i<arguments.length; i++) {
+			result + arguments[i];	
+		}
+		return a + b + c;
+	}
+	// 자바스크립트는 이름이 같으면 나중것이 유효하다.
+	/* function sumAll(a, b, c) {
+		return a + b + c;
+	}
+	function sumAll(a, b) {
+		return a + b;
+	} */
+	function f8() {
+		// 콜백함수: 함수를 파라메터(매개변수)로 보내고 받은쪽에서 호출
+		var f = function() {
+			alert("콜백함수연습")
+		};
+		f9(f);
+	}
+	function f9(argFunction) {
+		argFunction();
+	}
+	function f10() {
+		var f = function() {
+			document.querySelector("#here").innerText = new Date();
+		};
+		setInterval(f, 1000);
+	}
+	function f11() {
+		var aa = reaturnFunc();
+		var result = aa();
+		document.querySelector("#here").innerText = result;
+	}
+	function reaturnFunc() {
+		// 클로저 : 규칙(지역변수는 함수내에서만 사용한다.)을 위반하고 싶을때 클로저 사용
+		// 규칙: 함수 안의 지역변수는 함수 외부에서 사용 불가능
+		// 규칙: 지역변수는 함수 실행 시 생성되고 종료시 사라짐
+		// 지역변수는 함수종료후 메모리에서 사라져야하지만 function에 담겨서 다른 함수로 보내면
+		// 사라지지않고 남기 때문에 사용가능.
+		var score = 100;
+		var f = function() {
+			alert("나의 점수는 " + score);
+			return score;
+		};
+		return f;
+	}
+	// 즉시실행함수 (function(){})()
+	// add = function() { cnt++; return cnt; }
+	var add = (function() {
+		var cnt = 0;
+		console.log("즉시 실행함수는 1번 실행되고있다.");
+		return function() {
+			cnt++;
+			return cnt;
+		};
+	})();
+	function f12() {
+		document.querySelector("#here").innerText = add();
+	}
+	
+	// var2는 global scope를 갖는다. (바람직하지 않음)
+	var cnt2 = 0;
+	function f13() {
+		cnt2++;
+		document.querySelector("#here").innerText = cnt2;
+	}
+	function f14() {
+		for (/* var */let i=0; i<3; i++) {
+			// 일정시간마다 수행 : setInterval()
+			// 일정시간후 1회 수행됨 : setTimeout()
+			// [방법1] : 원하는 결과가 아니다.
+			// setTimeout(function(){ alert(i)}, 1)
+			
+			// [방법2] : 지역변수를 다른 지역변수에 복사
+			/* (function(x){
+				setTimeout(function(){ alert(x); }, 1);
+			})(i); */
+			
+			// [방법3] : let는 블럭내에서만 유효
+			setTimeout(function(){ alert(x); }, 1);
+		}
+		// var : 함수 내에서 접근 가능한 지역변수 -> 함수 종료시까지 남아있음
+	}
+	function f15() {
+		
+	}
+	
 </script>
+
 </head>
 <body>
 <h1>Function</h1>
 <button onclick="f1()">var &amp; let</button>
+<button onclick="f4()">익명함수(이름없는함수)</button>
+<button onclick="f5()">즉시실행함수</button>
+<button onclick="f6()">화살표함수(다른언어는 람다)</button>
+<button onclick="call()">같은이름함수</button>
+<button onclick="f7()">가변인자</button>
+<button onclick="f10()">콜백함수(현재시각을 출력)</button>
+<button onclick="f11()">함수를 Return(클로저때문)</button>
+<button onclick="f12()">Counter</button>
+<button onclick="f13()">Counter2(global영역)</button>
+<button onclick="f14()">클로저연습</button>
+<button onclick="f15()">클로저연습2</button>
 <hr>
 <input type="number" id="input1" value="100">
 <select id="op">
@@ -61,7 +213,8 @@ function f1() {
 	<option> / </option>
 </select>
 <input type="number" id="input2" value="200">
-<button onclick="f2()">결과 =</button>
+<button onclick="f2()">결과1</button>
+<button onclick="f3()">결과2</button>
 <input type="number" id="result" readonly="readonly">
 <div id="here">결과</div>
 </body>
