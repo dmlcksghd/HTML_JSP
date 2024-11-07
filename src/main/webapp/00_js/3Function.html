@@ -184,7 +184,13 @@ function f1() {
 		// var : 함수 내에서 접근 가능한 지역변수 -> 함수 종료시까지 남아있음
 	}
 	function f15() {
-		
+		var arr = [10, 20, 30];
+		arr.forEach(function(elt, index, arr2){
+			console.log(elt, index, arr2);
+			setTimeout(function(){
+				alert(elt);
+			}, 1);
+		});
 	}
 	
 </script>
