@@ -99,18 +99,43 @@
 	function f_param(a, b=20000, c=30000) {
 		return a + b + c;
 	}
+	
+	function call6() {
+		add(1, 2, 3);
+		var arr = [10, 20, 30];
+		add(...arr);
+	}
+	
+	function add() {
+		document.querySelector("#demo").innerHTML = arguments[0] + arguments[1] + arguments[2];
+	}
+	
+	function add(...arr) {
+		document.querySelector("#demo").innerHTML += "<br>" + (arr[0] + arr[1] + arr[2]) + " => 전개 사용(...)";
+	}
+	
+	/*
+		이벤트: 일어나는 사건(click, dbclick, mousedown, mousemoce, mouseover...)
+		이벤트속성: 이벤트와 이벤트핸들러를 연결하는 역할(onclick, onsbclick, onmousedown, ...)
+		이벤트핸들러: 
+	*/
+	function f_h1() {
+			document.querySelector("#demo").innerHTML += "<br>" + "onmouseover";
+		}
   </script>
   <link rel="stylesheet" href="/classMaterials/08/css/position-2.css"/>
 </head>
 <body>
 <h1>JavaScript Function</h1>
-<button onclick="call1()">콜백함수</button>
+<h1 onmouseover="f_h1()">JS Function</h1>
+<button  onclick="call1()">콜백함수</button>
 <button onclick="f_timer()">타이머 시작</button>
 <button onclick="f_stop()">timer중지</button>
 <button onclick="call2()">클로저</button>
 <button onclick="call3()">인코딩</button>
 <button onclick="call4()">문자->숫자</button>
 <button onclick="call5()">매개변수(default설정)</button>
+<button onclick="call6()">전개연산자(...)</button>
 <hr>
 
 <div id="demo">
