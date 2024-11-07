@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>$</title>
+  <!--  <script src="../external.js" type="text/javascript"></script>-->
+  <script>
+    function myCalculator(num1, num2, myCallback) {
+      //받은 함수를 계산한 결과를 myCallback의 인자로 실행
+      let sum = num1 + num2;
+      myCallback(sum);
+    }
+
+    function call1() {
+      //무엇을 할지 함수를 보냄
+      myCalculator(5, 5, myDisplayer2);
+    }
+
+    function myDisplayer(some) {
+      //전달 받은 값을 화면에 출력하는 역할.
+      document.getElementById("demo").innerHTML = some;
+    }
+
+    function myDisplayer2(some) {
+      //전달 받은 값을 화면에 출력하는 역할.
+      document.getElementById("demo2").innerHTML = some + "!!!";
+    }
+  </script>
+
+  <script>
+
+    function f_timer() {
+      //함수를 받ㅇ서 함수를 실행하는 JavaScript 내장 함수.
+      timerId = setInterval(f, 1000);  //-> 일정시간이 지날때마다 호출
+    }
+
+    function Myfunction() {
+      document.querySelector("#demo").innerHTML += "<br>" + new Date;
+    }
+
+    function f_stop() {
+      clearInterval(setInterval(timerId));
+    }
+
+    function call2() {
+      const add = (function () {
+        let counter = 0;
+        return function () {
+          counter += 1;
+          return counter;
+        }
+      })();
+      console.log(add());  //1
+      console.log(add());  //2
+      console.log(add());  //3
+    }
+
+    function call3() {
+      var url = "http://localhost:9090/appleShop4/emp/empRegister.jsp?fname=신한";
+
+      var result = encodeURIComponent(url);
+      document.querySelector("#demo").innerHTML = "incode: " +result;
+
+      result = decodeURIComponent(result);
+      document.querySelector("#demo").innerHTML += "<br>decode: " + result;
+    }
+
+	function call4() {
+		var str = "1000";
+	}
+  </script>
+  <link rel="stylesheet" href="/classMaterials/08/css/position-2.css"/>
+</head>
+<body>
+<h1>JavaScript Function</h1>
+<button onclick="call1()">콜백함수</button>
+<button onclick="f_timer()">타이머 시작</button>
+<button onclick="f_stop()">timer중지</button>
+<button onclick="call2()">클로저</button>
+<button onclick="call3()">인코딩</button>
+<button onclick="call4()">문자->숫자</button>
+<hr>
+
+<div id="demo">
+  여기
+</div>
+<div id="demo2">
+  여기
+</div>
+
+</body>
+</html>

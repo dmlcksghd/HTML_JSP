@@ -37,6 +37,7 @@ function f1() {
 		var result = calc(x, y, op);
 		document.querySelector("#result").value = result;
 	}
+	
 	function calc(x, y, op) {
 		var result;
 		switch (op) {
@@ -56,6 +57,7 @@ function f1() {
 		document.querySelector("#result").value = result;
 		
 	}
+	
 	//1. 선언적함수 : 이름이 있는 함수
 	function f4() {
 		// 2. 익명함수(이름이 없는 함수) -> 함수가 변수에 할당됨,
@@ -63,11 +65,13 @@ function f1() {
 		var result = add(10, 20);
 		document.querySelector("#here").innerText = result;
 	}
+	
 	function f5() {
 		// 3. 즉시실행함수
 		var result = (function(a, b){ return a+b;})(30, 40);
 		document.querySelector("#here").innerText = result;
 	}
+	
 	function f6() {
 		// var result = (function(a, b) { return a+b; })(1, 2);
 		// 함수를 정의
@@ -119,23 +123,28 @@ function f1() {
 		};
 		f9(f);
 	}
+	
 	function f9(argFunction) {
 		argFunction();
 	}
+	
 	function f10() {
 		var f = function() {
 			document.querySelector("#here").innerText = new Date();
 		};
 		timerId = setInterval(f, 1000);
 	}
+	
 	function f10_stop() {
 		clearInterval(timerId);
 	}
+	
 	function f11() {
 		var aa = reaturnFunc();
 		var result = aa();
 		document.querySelector("#here").innerText = result;
 	}
+	
 	function reaturnFunc() {
 		// 클로저 : 규칙(지역변수는 함수내에서만 사용한다.)을 위반하고 싶을때 클로저 사용
 		// 규칙: 함수 안의 지역변수는 함수 외부에서 사용 불가능
@@ -149,6 +158,7 @@ function f1() {
 		};
 		return f;
 	}
+	
 	// 즉시실행함수 (function(){})()
 	// add = function() { cnt++; return cnt; }
 	var add = (function() {
@@ -159,6 +169,7 @@ function f1() {
 			return cnt;
 		};
 	})();
+	
 	function f12() {
 		document.querySelector("#here").innerText = add();
 	}
@@ -169,6 +180,7 @@ function f1() {
 		cnt2++;
 		document.querySelector("#here").innerText = cnt2;
 	}
+	
 	function f14() {
 		for (/* var */let i=0; i<3; i++) {
 			// 일정시간마다 수행 : setInterval()
@@ -186,6 +198,7 @@ function f1() {
 		}
 		// var : 함수 내에서 접근 가능한 지역변수 -> 함수 종료시까지 남아있음
 	}
+	
 	// ES6이상
 	function f15() {
 		var arr = [10, 20, 30];
@@ -201,36 +214,37 @@ function f1() {
 
 </head>
 <body>
-<h1>Function</h1>
-<button onclick="f1()">var &amp; let</button>
-<button onclick="f4()">익명함수(이름없는함수)</button>
-<button onclick="f5()">즉시실행함수</button>
-<button onclick="f6()">화살표함수(다른언어는 람다)</button>
-<button onclick="call()">같은이름함수</button>
-<button onclick="f7()">가변인자</button>
-<!-- 콜백함수: 함수를 파라메타(아규먼트 = 매개변수)로 보내고 받은쪽에서 사용 -->
-<button onclick="f10()">콜백함수(현재시각을 출력)</button>
-<button onclick="f10_stop()">콜백함수(현재시각을 출력중지)</button>
-<!-- 클로저: 규칙을 위반하고 싶을 때 클로저사용
+	<h1>Function</h1>
+	<button onclick="f1()">var &amp; let</button>
+	<button onclick="f4()">익명함수(이름없는함수)</button>
+	<button onclick="f5()">즉시실행함수</button>
+	<button onclick="f6()">화살표함수(다른언어는 람다)</button>
+	<button onclick="call()">같은이름함수</button>
+	<button onclick="f7()">가변인자</button>
+	<!-- 콜백함수: 함수를 파라메타(아규먼트 = 매개변수)로 보내고 받은쪽에서 사용 -->
+	<button onclick="f10()">콜백함수(현재시각을 출력)</button>
+	<button onclick="f10_stop()">콜백함수(현재시각을 출력중지)</button>
+	<!-- 클로저: 규칙을 위반하고 싶을 때 클로저사용
 (함수 안의 지역변수는 함수 외부에서 사용 불가능: ES6이상에서 let, forEach()사용 / 
 지역변수는 함수 실행 시 생성되고 종료시 사라짐: 지역변수 담아서 함수 return) -->
-<button onclick="f11()">함수를 Return(클로저때문)</button>
-<button onclick="f12()">Counter</button>
-<button onclick="f13()">Counter2(global영역)</button>
-<button onclick="f14()">클로저연습</button>
-<button onclick="f15()">클로저연습2</button>
-<hr>
-<input type="number" id="input1" value="100">
-<select id="op">
-	<option> + </option>	<!-- value를 안주면 적은게 value가 됨 -->
-	<option> - </option>
-	<option> * </option>
-	<option> / </option>
-</select>
-<input type="number" id="input2" value="200">
-<button onclick="f2()">결과1</button>
-<button onclick="f3()">결과2</button>
-<input type="number" id="result" readonly="readonly">
-<div id="here">결과</div>
+	<button onclick="f11()">함수를 Return(클로저때문)</button>
+	<button onclick="f12()">Counter</button>
+	<button onclick="f13()">Counter2(global영역)</button>
+	<button onclick="f14()">클로저연습</button>
+	<button onclick="f15()">클로저연습2</button>
+	<hr>
+	<input type="number" id="input1" value="100">
+	<select id="op">
+		<option>+</option>
+		<!-- value를 안주면 적은게 value가 됨 -->
+		<option>-</option>
+		<option>*</option>
+		<option>/</option>
+	</select>
+	<input type="number" id="input2" value="200">
+	<button onclick="f2()">결과1</button>
+	<button onclick="f3()">결과2</button>
+	<input type="number" id="result" readonly="readonly">
+	<div id="here">결과</div>
 </body>
 </html>
