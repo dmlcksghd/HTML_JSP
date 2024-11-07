@@ -32,7 +32,7 @@
 
     function f_timer() {
       //함수를 받ㅇ서 함수를 실행하는 JavaScript 내장 함수.
-      timerId = setInterval(f, 1000);  //-> 일정시간이 지날때마다 호출
+      timerId = setInterval(Myfunction, 1000);  //-> 일정시간이 지날때마다 호출
     }
 
     function Myfunction() {
@@ -40,7 +40,7 @@
     }
 
     function f_stop() {
-      clearInterval(setInterval(timerId));
+      clearInterval(timerId);
     }
 
     function call2() {
@@ -68,6 +68,36 @@
 
 	function call4() {
 		var str = "1000";
+		//document.querySelector("#demo").innerHTML = Number(str)+2000;
+		document.querySelector("#demo").innerHTML = parseInt(str)+2000;
+	}
+	
+	function call5() {
+		//document.querySelector("#demo").innerHTML = f_param(10, 20, 30);
+		document.querySelector("#demo").innerHTML = f_param(10);
+	}
+	
+	// 숫자 + undefined => NaN
+	// [1]default 값 설정: 조건절이용
+	function f_param(a, b, c) {
+		if(!b) b = 200;
+		if(!c) c = 300;
+		
+		return a + b + c;
+	}
+	
+	// [2]default 값 설정: 논리연산자이용
+	function f_param(a, b, c) {
+		b = b || 2000;	// b가 있으면 b사용하고 없으면 2000을 b변수에 넣음
+		c = c || 3000;	// c가 있으면 c사용하고 없으면 3000을 b변수에 넣음
+		
+		return a + b + c;
+	}
+	
+	// [3]default 값 설정: 파라메터(=argument=매개변수)의 초기값 설정
+	// 내부 Browser 지원 안됨(최신기술이라서)
+	function f_param(a, b=20000, c=30000) {
+		return a + b + c;
 	}
   </script>
   <link rel="stylesheet" href="/classMaterials/08/css/position-2.css"/>
@@ -80,6 +110,7 @@
 <button onclick="call2()">클로저</button>
 <button onclick="call3()">인코딩</button>
 <button onclick="call4()">문자->숫자</button>
+<button onclick="call5()">매개변수(default설정)</button>
 <hr>
 
 <div id="demo">
