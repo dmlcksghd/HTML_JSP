@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+	// JavaScript 공식 이름 : ECMAScript5, ECMAScript6 ...
 function f1() {
 	// var : 지역변수, 함수내에서 유효하다.
 	// let : block {}내에서만 유요하다.
@@ -26,10 +27,42 @@ function f1() {
 	document.querySelector("#here").innerHTML = (i-1) + "까지 합: " + total;
 }
 </script>
+
+<script>
+	function f2() {
+		var x = Number(document.querySelector("#input1").value);
+		var y = Number(document.querySelector("#input2").value);
+		var op = document.querySelector("#op").value;
+		
+		var result = calc(x, y, op);
+		document.querySelector("#result").value = result;
+	}
+	function calc(x, y, op) {
+		var result;
+		switch (op) {
+		case "+": result = x + y; break;
+		case "-": result = x - y; break;
+		case "*": result = x * y; break;
+		case "/": result = x / y; break;
+		}
+		return result;
+	}
+</script>
 </head>
 <body>
 <h1>Function</h1>
 <button onclick="f1()">var &amp; let</button>
+<hr>
+<input type="number" id="input1" value="100">
+<select id="op">
+	<option> + </option>	<!-- value를 안주면 적은게 value가 됨 -->
+	<option> - </option>
+	<option> * </option>
+	<option> / </option>
+</select>
+<input type="number" id="input2" value="200">
+<button onclick="f2()">결과 =</button>
+<input type="number" id="result" readonly="readonly">
 <div id="here">결과</div>
 </body>
 </html>
