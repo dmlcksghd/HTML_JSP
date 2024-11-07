@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function f1() {
+	// var : 지역변수, 함수내에서 유효하다.
+	// let : block {}내에서만 유요하다.
+	// const : 상수는 값 변경 불가
+	const name = "Java";
+	// Assignment to constant variable
+	//name = "JAVA";
+	su2 = 200; 	// 바람직한 사용이 아님 -> 무조건 수행되고 global이기 때문
+	var su = 100;
+	var total = 0;
+	// NaN(Not a Number) : 숫자가 아니다.
+	for (let i=1; i<=su; i++) {
+		//console.log(i, total);
+		total += i;
+	}
+	{
+		let coffee = "아메리카노";
+		console.log(coffee);
+	}
+	document.querySelector("#here").innerHTML = (i-1) + "까지 합: " + total;
+}
+</script>
+</head>
+<body>
+<h1>Function</h1>
+<button onclick="f1()">var &amp; let</button>
+<div id="here">결과</div>
+</body>
+</html>
