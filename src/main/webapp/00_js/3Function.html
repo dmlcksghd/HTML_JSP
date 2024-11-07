@@ -183,6 +183,7 @@ function f1() {
 		}
 		// var : 함수 내에서 접근 가능한 지역변수 -> 함수 종료시까지 남아있음
 	}
+	// ES6이상
 	function f15() {
 		var arr = [10, 20, 30];
 		arr.forEach(function(elt, index, arr2){
@@ -204,7 +205,11 @@ function f1() {
 <button onclick="f6()">화살표함수(다른언어는 람다)</button>
 <button onclick="call()">같은이름함수</button>
 <button onclick="f7()">가변인자</button>
+<!-- 콜백함수: 함수를 파라메타(아규먼트 = 매개변수)로 보내고 받은쪽에서 사용 -->
 <button onclick="f10()">콜백함수(현재시각을 출력)</button>
+<!-- 클로저: 규칙을 위반하고 싶을 때 클로저사용
+(함수 안의 지역변수는 함수 외부에서 사용 불가능: ES6이상에서 let, forEach()사용 / 
+지역변수는 함수 실행 시 생성되고 종료시 사라짐: 지역변수 담아서 함수 return) -->
 <button onclick="f11()">함수를 Return(클로저때문)</button>
 <button onclick="f12()">Counter</button>
 <button onclick="f13()">Counter2(global영역)</button>
