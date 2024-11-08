@@ -102,12 +102,30 @@ input[type="submit"]:hover {
 	text-decoration: underline;
 }
 </style>
+<script type="text/javascript">
+	//고전이벤트 모델: 객체. 인벤트 속성 = 이벤트핸들러
+	window.onload = function(){
+	  //onsubmit는 default event이다. 이미 이벤트핸들러가 만들어져있다. 
+	  //submit버튼을 누르면 form의 input들이 서버에 전송된다.
+	  //개발자가 이벤트핸들러를 넣으면 먼저수행하고 default이벤트핸들러도 수행된다. 
+	  //default이벤트핸들러를 취소하려면 return false;
+	  document.querySelector("#myfrm").onsubmit = function(){
+		  var empid = document.querySelector('input[name="employee_id"]').value;
+		  console.log("*" + empid + "*");
+		  if(empid == null || empid.trim() == ""){
+			  alert('직원번호는 필수칼럼입니다.');
+			  return false;  
+		  } 
+	  };
+  };
+</script>
 </head>
 <body>
 	<div id="contaner">
 		<a href="empAll.jsp">직원조회</a>
 		<h1>직원등록</h1>
-		<form action="empRegister.jsp" method="post">
+		<form id="myfrm" empRegister.jsp" method="post"
+			onsubmit="alert('서버가기전'); return false;">
 			<label>직원번호:</label><input type="number" name="employee_id"><br>
 
 			<label>부서번호:</label> <select name="department_id">
