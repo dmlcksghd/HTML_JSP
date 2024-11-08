@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
+	rel="stylesheet">
+<title>JavaScript학습중</title>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+       var f = function(){};
+       //이벤트이름:load  이벤트속성:이벤트와이벤트핸들러연결 onload  이벤트핸들러:동작, function(){}
+       
+       //익명함수 : 이름이 없는 함수 
+       //선언적함수 : 이름이 있는 함수 (일반적)
+       window.onload = f_load;
+    	   
+       function f_load(){
+    	   var obj = document.querySelector("#btn-review");
+    	   var obj2 = document.querySelector("button:nth-of-type(2)")
+    	   var obj3 = document.querySelector("#btn-array");
+    	   var obj4 = document.querySelector(".btn-array2");
+    	   var obj5 = document.querySelector(".btn-array3");
+    	   var obj6 = document.querySelector(".btn-array4");
+    	   var obj7 = document.querySelector(".btn-math");
+    	   var obj8 = document.querySelector(".btn-object");
+    	   
+    	   var bom1 = document.querySelector(".btn-window");
+    	   var bom2 = document.querySelector(".btn-document");
+    	   var bom3 = document.querySelector(".btn-navigator");
+    	   var bom4 = document.querySelector(".btn-history");
+    	   var bom5 = document.querySelector(".btn-location");
+    	   var bom6 = document.querySelector(".btn-screen");
+    	   
+    	   //BOM test
+    	   var bom7 = document.querySelector(".btn-location-test");
+    	   
+    	   //callback함수 (함수를 다른함수에 전달, 호출은 받은쪽에서 한다.)
+           obj.onclick = f1;
+    	   obj2.onclick = f2;
+    	   obj3.onclick = f3;
+    	   obj4.onclick = f4;
+    	   obj5.onclick = f5;
+    	   obj6.onclick = f6;
+    	   obj7.onclick = f7;
+    	   obj8.onclick = f8;
+    	   
+    	   bom1.onclick = f_bom1;
+    	   bom2.onclick = f_bom2;
+    	   bom3.onclick = f_bom3;
+    	   bom4.onclick = f_bom4;
+    	   bom5.onclick = f_bom5;
+    	   bom6.onclick = f_bom6;    
+    	   
+    	   bom7.onclick = f_bom7;    	   
+       }
+       
+       function f_bom7(){
+    	   //다른페이지로 이동하기 <a href=""></a>
+    	   
+    	   //    "/appleShop/00_js/6Object.html"
+    	   var pathname = location.pathname;
+    	   var getUrl = location.origin + "/" + pathname.split("/")[1];	  
+    	   var url = getUrl + "/emp/empAll.jsp";
+    	   location.href = url;
+       }
+       
+       
+	   function f8(){
+		   //사용자정의 Object : 속성, 행위의 묶음 
+    	   var obj = {name:"홍길동", age:20, 
+    			      study:function(){
+    			    	  document.querySelector(".here").innerHTML = `열심히 공부합니다.`;
+    			      } };
+    	   console.log(obj.name);
+    	   console.log(obj["name"]);
+    	   var colName = "name";
+    	   console.log(obj[colName]);
+    	   console.log(obj.colName); //불가 undefined
+    	   obj.study();
+    	   
+    	   for(let prop in obj){
+    		   console.log(prop, obj[prop] );   
+    	   }
+    	   
+       }       
+	   function f_bom1(){
+    	   //window의 모든속성과 그값을 확인
+    	   var output = "<ul>";
+    	   for(let prop in window){
+    		   output += `<li>${prop} ....${window[prop]}    </li>`;
+    	   }
+    	   document.querySelector(".here").innerHTML = output + "</ul>" 
+		   
+       }
+	   function f_bom2(){
+    	   //document의 모든속성과 그값을 확인
+    	   var output = "<ul>";
+    	   for(let prop in document){
+    		   output += `<li>${prop} ....${document[prop]}    </li>`;
+    	   }
+    	   document.querySelector(".here").innerHTML = output + "</ul>"     	   
+       } 
+	   function f_bom3(){
+    	   //navigator의 모든속성과 그값을 확인
+    	   
+		   var str = navigator.userAgent;
+    	   if(str.includes("iPhone") ||  str.includes("Android")){
+    		   document.querySelector(".here").innerHTML = "<h1>스마트폰 접속함 </h1>";  
+    		   screen.orientation.lock("landscape");
+    	   } else{
+    		   document.querySelector(".here").innerHTML = "<h1>desktop 접속함 </h1>";
+    	   }
+    	   
+    	   
+    	   var output = "<ul>";
+    	   for(let prop in navigator){
+    		   output += `<li>${prop} ....${navigator[prop]}    </li>`;
+    	   }
+    	   document.querySelector(".here").innerHTML += output + "</ul>"     	   
+   	       //이 사이트를 접속한 Browser가 스마트폰인지? desktop?
+     	   
+   	       
+    	   
+    	   
+       }
+	   function f_bom4(){
+    	   //history 의 모든속성과 그값을 확인
+    	   var output = "<ul>";
+    	   for(let prop in history){
+    		   output += `<li>${prop} ....${history[prop]}    </li>`;
+    	   }
+    	   document.querySelector(".here").innerHTML = output + "</ul>"     	   
+   	   
+       }
+	   function f_bom5(){
+	   	   //location 의 모든속성과 그값을 확인
+    	   var output = "<ul>";
+    	   for(let prop in location){
+    		   output += `<li>${prop} ....${location[prop]}    </li>`;
+    	   }
+    	   document.querySelector(".here").innerHTML = output + "</ul>"     	   
+   	   
+       }
+	   function f_bom6(){
+	   	   //screen 의 모든속성과 그값을 확인
+    	   var output = "<ul>";
+    	   for(let prop in screen){
+    		   output += `<li>${prop} ....${screen[prop]}    </li>`;
+    	   }
+    	   document.querySelector(".here").innerHTML = output + "</ul>"     	   
+    	   
+       }	   
+       function f7(){
+    	   var a = Math.floor(4.9);//4
+    	   var b = Math.ceil(4.1);//5
+    	   var c = Math.max(a,b);
+    	   var d = Math.random(); //0<=   <1
+    	   var e = Math.floor(Math.random()*45)+1; //1<=   <=45
+    	   //중복되지않도록 random번호6개만들기      	   
+    	   var lucky = [];   	 
+    	   while(lucky.length<6){
+    		  let su = Math.floor(Math.random()*45)+1;
+    		  if(lucky.includes(su)) continue;
+    		  lucky.push(su);
+    	   }
+    	   document.querySelector(".here").innerHTML = `
+      	     <p>a : ${a}</p>
+      	     <p>b : ${b}</p>
+      	     <p>c : ${c}</p>
+      	     <p>d : ${d}</p>
+      	     <p>e : ${e}</p>
+      	     <p>lucky : ${lucky.join("★")}</p>
+      	   `;
+       }
+       function f6(){
+    	   //slice : 원래배열 그대로 유지
+    	   //splice : 원래배열 변경 
+    	   var arr = ["봄","여름","가을","겨울"];
+    	   var arr2 = arr.slice(3); //["겨울"]
+    	   var arr3 = arr.slice(2); //["가을","겨울"]
+    	   var arr4 = arr2.concat(arr3);
+    	   document.querySelector(".here").innerHTML = `
+    	     <p>원래배열 : ${arr}</p>
+    	     <p>arr4 : ${arr4}</p>
+    	   `;
+       }
+       
+       function f5(){
+    	   var arr = [1,2,3,4];
+    	   var arr2 = arr.splice(2); //[1,2]가 남음
+    	   
+    	   var arr3 = arr.splice(1,1,"JavaScript");//시작,개수,삽입할내용
+    	   
+    	   document.querySelector(".here").innerHTML = `
+    	     <p>삭제된 배열 : ${arr2}</p>
+    	     <p>삭제된 배열 : ${arr3}</p>
+    	     <p>원래배열 : ${arr}</p>
+    	   `;
+       }
+       
+       function f4(){
+    	   var arr = [1,2,3,4]; //Array(1,2,3,4)
+    	   arr.push(10,20);
+    	   arr.push(call());
+    	   arr.unshift("봄","여름","가을","겨울");
+    	   console.log(arr); //["봄","여름","가을","겨울", 1,2,3,4,10,20,["a","b"]]
+    	   console.log(arr[10]);
+    	   var before = arr.shift(); //앞에서꺼냄
+    	   var after = arr.pop();
+    	   document.querySelector(".here").innerHTML = `
+    	      <p>${arr}</>
+    	      <p>before : ${before}</>
+    	      <p>after : ${after}</>
+    	   `;
+       }
+       function call(){
+    	   return ["a","b"];
+       }
+       
+       function f3(){
+    	   var arr1 = [1,2,3,4];
+    	   var arr2 = ["봄","여름","가을","겨울"];
+    	   var arr3 = arr1.concat(arr2);
+    	   var arrStr  = arr2.join("**");
+    	   document.querySelector(".here").innerHTML = `
+    	      <p>배열1:${arr1}</p>
+    	      <p>배열2:${arr2}</p>
+    	      <p>배열3:${arr3}</p>
+    	      <p>요소 문자열만들기:${arrStr}</p>
+    	   `;
+       }
+       
+       function f2(){
+    	   console.log(this.innerText);
+    	   //객체는 속성(특징)과 행위(함수, 기능)를 갖는다. 
+    	   //1.사용자정의 객체
+    	   //2.내장객체(Date......)
+    	   var d = new Date();
+    	 
+    	   var dt_string = d.toISOString();
+    	   //일자와 시간을 구분해보기 
+    	   var arr= dt_string.split("T");
+    	   
+    	   document.querySelector(".here").innerHTML = 
+    		   `<p>${d}</p>
+    		    <p>${d.toLocaleDateString()}</p>
+    		    <p>${d.toISOString()}</p>
+    		    <p>일자 : ${arr[0]}</p>
+    		    <p>시간 : ${arr[1]}</p>
+    		   `; 
+    	   //3.DOM(Document Object Model)
+    	   //4.BOM(Browser Object Model) 
+       }
+       
+       
+       function f1(){
+    	   console.log(this.innerText);
+    	   //내부함수 : 함수 내에서만 접근가능 
+    	   var result = innerFunc();
+    	   console.log("return값:" + result);
+    	   function innerFunc(){
+    		   console.log("내부함수 : 함수 내에서만 접근가능 ");
+    		   return 100;
+    	   }
+       };
+       
+    </script>
+</head>
+<body
+	class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row bd-example-row-flex-cols">
+
+	<!-- Example Code -->
+
+
+	<div class="container text-center">
+		<div class="row align-items-center">
+			<div class="col">
+				<button id="btn-review" class="btn btn-primary">함수복습</button>
+				<button class="btn btn-success">Object1</button>
+			</div>
+			<div class="col">
+				<button id="btn-array" class="btn btn-success">배열</button>
+				<button class="btn btn-success btn-array2">배열2</button>
+				<button class="btn btn-success btn-array3">배열3</button>
+				<button class="btn btn-success btn-array4">배열4</button>
+			</div>
+			<div class="col">
+				<button class="btn btn-success btn-math">Math객체</button>
+				<button class="btn btn-success btn-object">사용자정의Object</button>
+
+			</div>
+			<div class="col">
+				<h2>BOM(Browser Object Model)</h2>
+				<button class="btn btn-success btn-window">window</button>
+				<button class="btn btn-success btn-document">document</button>
+				<button class="btn btn-success btn-navigator">navigator</button>
+				<button class="btn btn-success btn-history">history</button>
+				<button class="btn btn-success btn-location">location</button>
+				<button class="btn btn-success btn-screen">screen</button>
+                <button class="btn btn-success" onclick="history.back()">뒤로가기</button>
+			</div>
+			<div class="col">
+				<button class="btn btn-success btn-location-test">location확인</button>
+				<button class="btn btn-success" onclick="location.reload()">Reload</button>
+				 
+			</div>
+		</div>
+		<div class="row align-items-start here">여기</div>
+	</div>
+
+
+	<!-- End Example Code -->
+</body>
+</html>

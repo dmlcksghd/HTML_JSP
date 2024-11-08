@@ -4,47 +4,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>직원목록</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap"
 	rel="stylesheet">
 <style>
-/* body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 20px;
-    }
-    h1 {
-        color: #333;
-    }
-    table {
-        width: 80%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-    table, th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-    }
-    th {
-        background-color: #f2f2f2;
-        color: #333;
-    }
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-    tr:hover {
-        background-color: #e0e0e0;
-    } */
+/* 스타일 */
 table, th, td {
 	border: 1px solid black;
 	border-collapse: collapse;
@@ -58,7 +28,6 @@ th {
 	background-color: rgb(255, 163, 138);
 }
 
-/* 태그이름 사이의 공백은 자손을 의미 */
 tbody tr:nth-child(2n) {
 	background-color: #f9f9f9;
 }
@@ -67,8 +36,8 @@ tbody tr:nth-child(2n+1) {
 	background-color: #e0e0e0;
 }
 
-tbody td:nth-child(7)[data-fname$='홍'] {
-	color: purple;
+.red {
+	color: red;
 }
 
 caption {
@@ -91,9 +60,43 @@ a.new {
 	padding: 10px;
 }
 </style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js
 "></script>
+<script>
+	window.onload = function() {
+		var obj = document.querySelector("#btn-search");
+		var obj_job = document.querySelector("#btn_search_job");
+		obj.onclick = f_salary;
+		obj_job.onclick = f_job;
+	};
+	function f_salary() {
+		var sal = document.querySelector("#input_sal").value;
+		var tds = document.querySelectorAll("tbody td:nth-child(8)");
+		for (let i = 0; i < tds.length; i++) {
+			var sal2 = parseInt(tds[i].innerText);
+			if (sal <= sal2) {
+				tds[i].classList.add("red");
+			} else {
+				tds[i].classList.remove("red");
+			}
+		}
+	}
+	function f_job() {
+		var job = document.querySelector("#input_job").value;
+		var tds = document.querySelectorAll("tbody td:nth-child(7)");
+		for (let i = 0; i < tds.length; i++) {
+			var job2 = tds[i].innerText;
+			if (job === job2) {
+				tds[i].classList.add("red");
+			} else {
+				tds[i].classList.remove("red");
+			}
+		}
+	}
+</script>
 </head>
 <body>
 	<div id="container">
@@ -103,18 +106,23 @@ a.new {
 			</h1>
 		</header>
 		<main>
-		<section>
-			<button class="btn btn-primary">조회</button>
-		</section>
+			<section>
+				<button class="btn btn-primary">조회</button>
+				<button class="btn btn-primary">수정</button>
+			</section>
 			<section>
 				<div>
 					<a class="new" href="empInsert.jsp">신규직원등록</a> <a class="new"
-						href="../dept/deptInsert.jsp">신규부서등록</a>
+						href="../dept/deptInsert.jsp">신규부서등록</a> 
+					<input type="number" id="input_sal" value="10000">
+					<button id="btn-search" class="btn btn-success">금액으로 찾기</button>
+					<input type="text" id="input_job" value="IT_PROG">
+					<button id="btn_search_job" class="btn btn-success">Job찾기</button>
 					<h1>직원목록</h1>
 					<table>
+						<caption>직원번호</caption>
 						<thead>
 							<tr>
-								<caption>직원번호</caption>
 								<th>직원번호</th>
 								<th>firstName</th>
 								<th>lastName</th>
@@ -136,7 +144,7 @@ a.new {
 							%>
 							<tr>
 								<td><%=emp.getEmployee_id()%></td>
-								<td data-fname="<%=emp.getFirst_name()%></td>"><%=emp.getFirst_name()%></td>
+								<td data-fname="<%=emp.getFirst_name()%>"><%=emp.getFirst_name()%></td>
 								<td><%=emp.getLast_name()%></td>
 								<td><%=emp.getEmail()%></td>
 								<td><%=emp.getPhone_number()%></td>
