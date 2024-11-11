@@ -1,54 +1,191 @@
-  <!DOCTYPE html>
-  <html lang="ko">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CSS Grid Layout</title>
-    <style>      
-      .container{
-        width:700px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, 100px);
-      }
-      .box{
-        padding:15px;
-        color:#fff;
-        text-align:center;
-      }   
-      /* Do it! 그리드 라인을 사용해 배치하기 */
-      .box1 {
-        background-color:#3689ff;
-        grid-column: 1/4;
-      }
-      .box2 {
-        background-color:#00cf12;
-        grid-row: 2/4;
-      }
-      .box3 {
-        background-color:#ff9019;
-        grid-column: 2/4;     
-        grid-row-start: 2;   
-        }
-      .box4 {
-        background-color:#ffd000;
-        grid-column-start: 3;
-        grid-row-start: 3;
-      }
-      .box5 {
-        background-color:#ff3f3f;
-        grid-row: 5;
-        grid-column: 1/5;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="box box1">box1</div>
-      <div class="box box2">box2</div>
-      <div class="box box3">box3</div>
-      <div class="box box4">box4</div>
-      <div class="box box5">box5</div>
-    </div>
-  </body>
-  </html>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Grid Layout</title>
+<style>
+.container {
+	width: 900px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 150px);
+	margin: 0 auto;
+}
+
+.box {
+	padding: 15px;
+	color: #fff;
+	text-align: center;
+}
+/* Do it! 그리드 라인을 사용해 배치하기 */
+.box1 {
+	background-color: #3689ff;
+	grid-column: 1/4;
+	/*  grid-column-start: 1;
+        grid-column-end: 4; */
+}
+
+.box2 {
+	background-color: #00cf12;
+	grid-row: 2/4;
+}
+
+.box3 {
+	background-color: #ff9019;
+	grid-row: 2/4;
+	grid-column: 2/4;
+}
+
+.box4 {
+	background-color: #ffd000;
+	grid-column-start: 3;
+	grid-row-start: 3;
+}
+
+.box5 {
+	background-color: #ff3f3f;
+}
+
+ul li {
+	display: inline-block;
+	width: 100px;
+	background-color: purple;
+	border-radius: 20px;
+	/*  border: 1px solid red; */
+}
+
+a {
+	display: inline-block;
+	width: 100px;
+	/*  border: 1px solid blue; */
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: white;
+	text-decoration: none;
+}
+
+label {
+	display: inline-block;
+	width: 70px;
+}
+
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 10px;
+}
+
+.changeStyle {
+	font-size: 20px;
+	background-color: aliceblue;
+	color: darkblue;
+}
+</style>
+<script>
+	//window객체 onload이벤트 속성  function()이벤트핸들러
+	//이벤트 속성 =>이벤트와 이벤트핸들러 연결 
+	window.onload = function() {
+		console.log("2.익명함수..callback함수...onload는 load후 ");
+
+		//1.고전적 이벤트 모델
+		document.querySelector("#btn1").onclick = f1;
+		//2.표준이벤트모델
+		document.querySelector("#btn2").addEventListener("click", f1);
+	};
+	
+	function f1() {
+		document.querySelector(".box3").innerHTML = "<h2>" + this.innerHTML + "</h2>";	
+	}
+	
+	(function() {
+		console.log("1.익명함수..즉시실행");
+	})();
+	
+	//선언적함수
+	function call1() {
+		console.log("call function");
+		var userid = document.querySelector("#userid").value;
+		var username = document.querySelector("#username").value;
+		var email = document.querySelector("#email").value;
+		var phone = document.querySelector("#phone").value;
+		var major = document.querySelector("#major").value;
+		
+		//JavaScript Object 
+		var userInfo = {} ; 
+		userInfo.번호 = userid; //{번호:userid}
+		userInfo.username = username; //{번호:userid,username}
+		userInfo.email = email; //{번호:userid,username,email}
+		userInfo.phone = phone;
+		userInfo.major = major;
+		//console.log(userInfo);
+		//console.log(userInfo.major);
+		//console.log(userInfo["major"]);
+		var aa = "major";
+		//console.log(userInfo[aa]);
+		
+		
+		return userInfo;
+	}
+	function call2(){
+		//JavaScript Object의 내용으로 DOM객체 동적 생성
+		//table/tr/td모양으로 만들기 
+		var user = call1();
+		var obj_output = "";
+		for(var pro in user){
+			obj_output += `
+			  <tr>
+			   <th>${pro}</th>
+			   <td>${user[pro]}</td>
+			  </tr>
+			`;
+		}
+		
+		var output = `
+			<table >
+			    <tbody>
+			  		${obj_output}	
+			    </tbody>
+		    </table>
+		`;
+		console.log(output);
+		document.querySelector(".box3").innerHTML = output;  
+		
+		
+	}
+	function call3(){
+		// 자식으로 나오는 5번째 tr/ 자식td
+		var obj = document.querySelector("tr:nth-child(5) > td");
+		if(obj == null) return;
+		obj.setAttribute("class", "changeStyle");
+	}
+	
+</script>
+</head>
+<body>
+	<div class="container">
+		<div class="box box1">
+			<ul>
+				<li><a href="javascript:call1()">DOM접근</a></li>
+				<li><a href="javascript:call2()">DOM생성</a></li>
+				<li><a href="javascript:call3()">DOM수정</a></li>
+				<li><button id="btn1">고전적이벤트모델</button></li>
+				<li><button id="btn2">표준이벤트모델</button></li>
+			</ul>
+		</div>
+		<div class="box box2">
+			<label>userid:</label> <input id="userid" value="aa"><br>
+			<label>username:</label> <input id="username"> <br> <label>email:</label>
+			<input id="email"><br> <label>phone:</label> <input
+				id="phone"><br> <label>전공선택:</label> <select id="major">
+				<option>컴공</option>
+				<option value="e">경제</option>
+				<option>경영</option>
+			</select>
+		</div>
+		<div class="box box3"></div>
+
+	</div>
+</body>
+</html>

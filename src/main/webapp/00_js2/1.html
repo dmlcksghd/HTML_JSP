@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+//고전적 이벤트모델(이벤트 속성에 이벤트 핸들러 연결 ) 
+ window.onload = f_initial;
+	 
+	 
+function f_initial(){
+   //표준이벤트모델(이벤트이름과 이벤트 핸들러 연결 )
+   document.querySelector("#btn1").addEventListener("click", f_call1);
+   document.querySelector("#btn2").addEventListener("click", f_call2);
+   document.querySelector("#btn3").addEventListener("click", f_call3);
+   document.querySelector("#btn4").addEventListener("click", f_call4);
+   document.querySelector("#btn5").addEventListener("click", f_call5);
+   document.querySelector("#btn6").addEventListener("click", f_call6);
+};
+function f_call6(){
+	var arr = [100,40,90,20, 88];
+	var beforeStr = arr.join("**");
+
+	//함수를 만들어서 sort함수에 parameter로 넘겨준다.sort함수가 부른다.  
+	//< = > 
+	arr.sort(function(a,b){ return a-b; });
+	var ascStr = arr.join("**");
+	
+    //화살표함수(다른언어는 람다식)
+	arr.sort((a,b)=> b-a);
+	var descStr = arr.join("**");
+	
+	//[{},{},{},{},{}]
+	var studentArr = f_call4();
+	
+	//학생의 평균으로 asc 
+	studentArr.sort((a,b)=>a.getAvg() - b.getAvg());
+	//복사 
+	var backupArr = studentArr.slice();	// slice는 원본 안건듬, splice가 원본 건듬
+	console.log(backupArr)
+	 
+ 
+ 
+	//학생이름순으로 desc
+	studentArr.sort((a,b)=>b.이름.localeCompare(a.이름)); 
+	
+	var hereObj = document.querySelector("#here");
+	hereObj.innerHTML = `
+	  before: ${beforeStr}  <br>
+	  after(asc) : ${ascStr}<br>
+	  after(desc) : ${descStr}<br>
+	  <hr>
+	  학생들 정보(평균sort) : <br> ${backupArr.join("<br>")}
+	  <hr>
+	  학생들 정보(이름sort) : <br> ${studentArr.join("<br>")}
+	`;
+}
+
+
+function f_call5(){
+	var str = "문자열 메서드";
+	var str2 = str.anchor(); //<a>문자열 메서드</a>
+	var hereObj = document.querySelector("#here");
+	
+	hereObj.innerHTML = str2;
+	document.querySelector("#here > a").removeAttribute("name");
+	document.querySelector("#here > a").setAttribute("href","http://www.google.com");
+
+
+}
+
+
+
+function f_call1(){
+	//#btn1을 클릭하면(click) 호출되는 callback함수이다
+	var obj = {키:"값", "user name":"홍길동"};
+	var output = obj.키 + "," + obj["user name"];
+	var hereObj = document.querySelector("#here");
+	
+	hereObj.innerHTML = "<p>" + output + "</p>";
+	
+	var myname="홍길동";
+	var myage = 20;
+	//var obj2 = {myname:myname, myage:myage};
+	var obj2 = {myname, myage};
+	hereObj.innerHTML += "<p>" + obj2.myname + "**" +obj2["myage"]  + "</p>";
+	
+}
+
+function f_call2(){
+	//callback함수이다
+	
+	//함수에서 속성을 접근시 반드시 this사용한다.
+	//this없으면 local변수 > global변수 > window속성을 찾음 
+	console.dir(window);
+	var person = {
+	  name2:"윤인성",
+	  eat : function(food){
+		  var hereObj = document.querySelector("#here");
+		  hereObj.innerHTML = `name(속성):${this.name2} <br> food이름(parameter):${food} `;
+		  
+	  }
+	};
+	person.eat("라면");
+}
+
+//생성자함수 : 시작문자는 대문자, 생성시는 new연산자를 이용
+//new Date()
+//new Array()
+function Student(name, java, sql, web){
+	this.이름 = name;
+	this.자바 = java;
+	this.sql = sql;
+	this.web = web;
+}
+//prototype는 생성자함수를 이용해서 만든 객체들의 공유공간 
+//Student.prototype=>new Student()로 생성된 객체들의 공유공간 
+Student.prototype.getSum = function(){
+	return this.자바 + this.sql + this.web;
+};
+Student.prototype.getAvg = function(){
+	return this.getSum()/3;
+};
+Student.prototype.toString = function(){
+	return `이름은 ${this.이름}  총점은 ${this.getSum()}  평균은 ${this.getAvg()}`;
+};
+
+
+
+function f_call4(){
+	var studentArr = [];
+	studentArr.push(new Student("홍길동1", 100, 100,88 ));
+	studentArr.push(new Student("홍길동2", 90, 99,77 ));
+	studentArr.push(new Student("홍길동3", 80, 88, 99 ));
+	studentArr.push(new Student("홍길동4", 70, 100,100 ));
+	studentArr.push(new Student("홍길동5", 99, 88, 77 ));
+	var hereObj = document.querySelector("#here");
+	for(var i in studentArr){
+		console.log(studentArr[i] );
+		hereObj.innerHTML += "<p>" + studentArr[i] + "</p>";//toString()호출된다. [object Object]
+	}
+	return studentArr;
+}
+
+function f_call3(){
+	//callback함수이다
+ 
+	var studentArr = [];
+	studentArr.push({이름:"홍길동1", 자바:100, sql:100, web:88});
+	studentArr.push({이름:"홍길동2", 자바:90, sql:99, web:77});
+	studentArr.push({이름:"홍길동3", 자바:80, sql:88, web:99});
+	studentArr.push({이름:"홍길동4", 자바:70, sql:100, web:100});
+	studentArr.push({이름:"홍길동5", 자바:99, sql:88, web:77});
+	
+	//for(속성넣을변수 in object)
+	//for(배열순서변수 in 배열)
+	for(var i in studentArr){
+		studentArr[i].getSum = function(){
+			return this.자바 + this.sql + this.web;
+		};
+		studentArr[i].getAvg = function(){
+			return this.getSum()/3;
+		};
+		studentArr[i].toString = function(){
+			return `이름은 ${this.이름}  총점은 ${this.getSum()}  평균은 ${this.getAvg()}`;
+		};
+	}
+	
+	var hereObj = document.querySelector("#here");
+	for(var i in studentArr){
+		console.log(studentArr[i] );
+		hereObj.innerHTML += "<p>" + studentArr[i] + "</p>";//toString()호출된다. [object Object]
+	}
+	
+}
+
+</script>
+</head>
+<body>
+<h1>JavaScript Object</h1>
+<button id="btn1">Object1</button>
+<button id="btn2">Object에서this</button>
+<button id="btn3">Object+배열</button>
+<button id="btn4">생성자함수</button>
+<button id="btn5">String내장객체</button>
+<button id="btn6">Array내장객체</button>
+<hr>
+<div id="here">여기</div>
+</body>
+</html>
+
+
