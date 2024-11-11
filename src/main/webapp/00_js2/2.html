@@ -39,6 +39,46 @@ table, th, td {
 	 btn10.addEventListener("click", f_call10);
  }
  
+ function f_call10() {
+	 const options = {method: 'GET', headers: {accept: 'application/json'}};
+
+	 fetch('https://api.bithumb.com/public/ticker/All', options)
+	   .then(response => response.json())
+	   .then(response => {
+		   
+		   var table = `<tr><td>종목명</td>`;
+		   for(let data in response.data["BTC"]) {
+			   table += `<th>${data}</th>`;
+		   }
+		   table += `</tr>`;
+		   var row = "";
+		   for(var data in response.data) {
+			   console.log(data);
+			   if(data == 'date') {
+				   console.log(response.data["date"]);
+				   today = new Date(parseInt(response.data["date"])).toISOString();
+				   continue;
+			   }
+			   row += `<tr><td>${data}</td>`;
+			   for(var data2 in response.data[data]) {
+				   console.log(data2);
+				   row += `<td>${response.data[data][data2]}</td>`; 
+			   }
+			   row += `</tr>`;
+		   }
+		   hereObj.innerHTML = 
+			   `
+			   		<table>
+			   			<caption>기준일:${today}</caption> 
+		   				${table}
+		   				${row}
+		   			</table>
+			   `;
+		   
+	   })
+	   .catch(err => console.error(err));
+ }
+ 
  function f_call9(){
 	 const options = {method: 'GET', headers: {accept: 'application/json'}};
 	 fetch('https://api.bithumb.com/public/ticker/All', options)
