@@ -8,6 +8,10 @@
 		min-width: 150px;
 		min-height: 150px;
 	}
+	#here {
+		border: 1px solid gray;
+		padding: 10px;
+	}
 </style>
 <script src="jquery-3.7.1.min.js"></script>
 <script>
@@ -24,6 +28,27 @@ function f_initial() {
 	$("#btn8").click(f_do8);
 	$("#btn9").click(f_do9);
 	$("#btn10").click(f_do10);
+	$("#btn11").click(f_do11);
+
+}
+
+function f_do11(){
+	//<img src="" alt="" width="150px" />
+	var arr = ["../14/images/prod1.jpg","../14/images/prod2.jpg",
+		"../14/images/prod3.jpg", "../14/images/sunset.jpg"];
+	
+	var img1 = $("<img/>").attr({src:arr[0], alt:"prod1이미지", width:"150px"});
+	var img2 = $("<img/>").attr({src:arr[1], alt:"prod2이미지", width:"150px"});
+	var img3 = $("<img/>").attr({src:arr[2], alt:"prod3이미지", width:"150px"});
+	var img4 = $("<img/>").attr({src:arr[3], alt:"sunset이미지", width:"150px"});
+	
+	//자식으로 들어가는거
+	$(img1).appendTo("#here");
+	$(img2).prependTo("#here");
+	
+	// here의 형제로 들어가는거
+	$(img3).insertBefore("#here");
+	$(img4).insertAfter("#here");
 }
 
 function f_do10() {
@@ -117,6 +142,8 @@ function f_do1(){
 <button id="btn8">객체읽기/객체추가</button>
 <button id="btn9">empty</button>
 <button id="btn10">remove</button>
+<button id="btn11">동적생성(앞/뒤/before/after)</button>
+
 <hr>
 <div id="here">
 	<img alt="감귤" src="../08_boxModel/images/tangerines.jpg">
