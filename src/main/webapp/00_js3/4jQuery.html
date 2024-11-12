@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery 연습</title>
+<style>
+	img {
+		min-width: 150px;
+		min-height: 150px;
+	}
+</style>
+<script src="jquery-3.7.1.min.js"></script>
+<script>
+$(f_initial);
+
+function f_initial() {
+	$("#btn1").click(f_do1);
+	$("#btn2").click(f_do2);
+	$("#btn3").click(f_do3);
+	$("#btn4").click(f_do4);
+}
+
+function f_do4() {
+	var obj = {
+			"width":function(index) { return 150*(index+1);}, 
+			"height":function(index) {return 150*(index+1)}};
+	$("#here img").attr(obj);
+}
+
+function f_do3() {
+	$("#here img:nth-child(1)").css("border", "5px dotted red");
+
+	var obj = {"width":"250px", "height":"250px"};
+	$("#here img:nth-child(2)").attr(obj);
+}
+
+function f_do2(){
+	//setter
+	$("#here img:nth-child(1)").css("border", "5px dotted red");
+	$("#here img:nth-child(1)").attr("width", "250px");
+	$("#here img:nth-child(1)").attr("height", "250px");
+}
+
+function f_do1(){
+	//getter
+	var src1 = $("#here img:nth-child(1)").attr("src");
+	console.log(src1);
+	
+}
+</script>
+</head>
+<body>
+<h1>jQuery 문서객체 조작</h1>
+<hr>
+<button id="btn1">속성변경1</button>
+<button id="btn2">속성변경2(1)</button>
+<button id="btn3">속성변경3(2)</button>
+<button id="btn4">속성변경4(all)</button>
+<hr>
+<div id="here">
+	<img alt="감귤" src="../08_boxModel/images/tangerines.jpg">
+	<img alt="고양이" src="../08_boxModel/images/cat.jpg">
+	<img alt="포토" src="../08_boxModel/images/photo.jpg">
+</div>
+</body>
+</html>

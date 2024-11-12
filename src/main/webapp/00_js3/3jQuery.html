@@ -19,6 +19,20 @@ function f_initial(){
 	$("button:nth-of-type(7)").click(f_go7);
 	$("button:nth-of-type(8)").click(f_go8);
 	$("button:nth-of-type(9)").click(f_go9);
+	$("div button:nth-of-type(1)").click(f_go10);
+}
+
+function f_go10() {
+	var txt = $(this).text();
+	if(txt === "활성화하기") {
+		$(this).text("비활성화하기");
+		$(this).parent().css("background-color", "lightgreen");
+		$(this).parent().find("span").text("활성화");
+	} else {
+		$(this).text("활성화하기");
+		$(this).parent().css("background-color", "pink");
+		$(this).parent().find("span").text("비활성화");
+	}
 }
 
 function f_go9() {
@@ -128,48 +142,49 @@ function f_go(){
 }
 </script>
 <style>
-  p, h2{
-    border: 1px solid green;
-    padding: 5px;
-   
-  }
-  .height-light {
-    background-color: yellow;
-    font-weight: bold;
-    font-size: 20px;
-  }
+p, h2 {
+	border: 1px solid green;
+	padding: 5px;
+}
+
+.height-light {
+	background-color: yellow;
+	font-weight: bold;
+	font-size: 20px;
+}
 </style>
 </head>
 <body>
-<h1>jQuery활용</h1>
-<button>배열1</button>
-<button>배열2</button>
-<button>addClass</button>
-<button>extend</button>
-<button>filter</button>
-<button>filter(end)</button>
-<button>위치(eq,first)</button>
-<button>XML파싱</button>
-<button>XML파싱(공공데이터)</button>
-<button>parent()</button>
-<hr/>
-<p>p1</p> 
-<p>p2</p> 
-<p>p3</p> 
-<p>p4</p> 
-<p>p5</p>
-<hr/>
-<h2>0</h2>
-<h2>1</h2>
-<h2>2</h2>
-<h2>3</h2>
-<h2>4</h2>
-<h2>5</h2>
-<h2>6</h2>
- 
-<hr/>
-<div id="here">
-여기
-</div>
+	<h1>jQuery활용</h1>
+	<button>배열1</button>
+	<button>배열2</button>
+	<button>addClass</button>
+	<button>extend</button>
+	<button>filter</button>
+	<button>filter(end)</button>
+	<button>위치(eq,first)</button>
+	<button>XML파싱</button>
+	<button>XML파싱(공공데이터)</button>
+	<div>
+	<span>비활성화</span>
+		<button>활성화하기</button>
+	</div>
+	<hr />
+	<p>p1</p>
+	<p>p2</p>
+	<p>p3</p>
+	<p>p4</p>
+	<p>p5</p>
+	<hr />
+	<h2>0</h2>
+	<h2>1</h2>
+	<h2>2</h2>
+	<h2>3</h2>
+	<h2>4</h2>
+	<h2>5</h2>
+	<h2>6</h2>
+
+	<hr />
+	<div id="here">여기</div>
 </body>
 </html>
