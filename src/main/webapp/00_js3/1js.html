@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script  src="external.js"  type="text/javascript"></script>
+<style>
+ table, td, th{
+   border : 1px solid black;
+   border-collapse: collapse;
+   padding: 10px;
+ }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+//JavaScript Object에서 members정보 추출하기 
+//1.members정보 추출해서 #here에 출력하기 (table/tr/td/td/td/td(ul/li)) 
+window.onload = f_initial;
+function f_initial(){
+	var btn1 = document.querySelector("button:nth-of-type(1)");
+	var btn2 = document.querySelector("button:nth-of-type(2)");
+	var btn3 = document.querySelector("button:nth-of-type(3)");
+	var btn4 = document.querySelector("button:nth-of-type(4)");
+	btn1.addEventListener("click", f_call1);
+	btn2.addEventListener("click", f_call2);
+	btn3.addEventListener("click", f_call3);
+	btn4.addEventListener("click", f_call4);
+ 
+}
+function f_call4(){
+	var a = 10/0;
+	var b = 10/0.0;
+	var c = 10/'문자';
+	console.log(a);
+	console.log(b);
+	console.log(c);
+	
+	try {
+		f_call5();
+	}catch(ex){
+		console.log(ex);
+		console.log(ex.message);
+	} finally{
+		console.log("-------finally-----");
+	}
+	console.log("----------END-----------")
+}
+function f_call3(){
+	////---------------------------!!!!
+	var memberArr = memberlist.members;
+	//memberlist.members age 역순으로 이름출력하기 
+	//memberArr.sort((a,b)=>b.age - a.age);
+	
+	//members powers의 갯수가 많은사람부터 ...같으면 나이가 작은사람부터 출력
+	memberArr.sort((a,b)=>{
+		var cnt = b.powers.length - a.powers.length;
+		if(cnt==0) return a.age - b.age;
+		return cnt;
+	});
+	
+	var output_item = '';
+	memberArr.forEach(item=>{
+		output_item += `<li>${item.name}(${item.age})--파워갯수:${item.powers.length}   </li>`;
+	});
+	var output = `
+	  <ul>
+	    ${output_item}
+	  </ul>  
+	`;
+	document.querySelector("#here").innerHTML = output;
+}
+function f_call2(){
+	//stringify() : obj->JSON  toJSON()메서드있으면 수행, 없으면 모든data가 문자로변경 
+	//parse() : JSON문자->obj;
+	var json_str = JSON.stringify(memberlist);
+	document.querySelector("#here").innerHTML = 
+		json_str + "<hr>" +
+		JSON.parse(json_str).homeTown;
+}
+function f_call1(){
+	var output_data = "";
+	var arr = memberlist.members;
+	arr.forEach((item)=>{
+		var powerList = "<ul>";
+		item.powers.forEach((ele)=>{
+			powerList += `<li>${ele}</li>`;
+		});
+		powerList += "</ul>";
+		output_data += `
+		  <tr>
+		   <td>${item["name"]}</td>
+		   <td>${item.age}</td>
+		   <td>${item.secretIdentity}</td>
+		   <td>${powerList}</td>
+		  </tr>
+		`;
+	});
+	
+	var output = `
+		<table>
+        <tr>
+          <th>name</th><th>age</th><th>secretIdentity</th><th>powers</th>
+        </tr>
+        ${output_data} 
+      </table>
+	`;
+	document.querySelector("#here").innerHTML = output;
+}	
+</script>
+</head>
+<body> 
+	<h1>JavaScript마무리</h1>
+	<hr/>
+	<button>JSON연습1(JS Object)</button> 
+	<button>JSON연습2(JSON-문자)</button> 
+	<button>JSON연습3(sort)</button> 
+	<button>예외(try~catch~finally)</button> 
+	<hr>
+	<div id="here">
+      
+	</div>
+</body>
+</html>

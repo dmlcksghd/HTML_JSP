@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="jquery-3.7.1.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+<script>
+window.onload = function(){
+	document.querySelector("#here").innerHTML += "<h1>JavaScript이용1</h1>";
+};
+window.onload = function(){
+	document.querySelector("#here").innerHTML += "<h1>JavaScript이용2</h1>";
+};
+$(document).ready(function(){
+	document.querySelector("#here").innerHTML += "<h1>jQuery이용1</h1>";
+});
+$(document).ready(function(){
+	document.querySelector("#here").innerHTML += "<h1>jQuery이용2</h1>";
+});
+$(function(){
+	document.querySelector("#here").innerHTML += "<h1>jQuery이용3</h1>";
+});
+$(()=>{
+	document.querySelector("#here").innerHTML += "<h1>jQuery이용4</h1>";
+});
+$(call);
+jQuery(call);
+function call(){
+	document.querySelector("#here").innerHTML += "<h1>jQuery이용5</h1>";
+}
+//
+$(function(){
+	
+	$("button:nth-of-type(1)").click(function(){
+		$("button").css("background-color","blue");
+		$("button").css("color","white");
+	});
+	$("button:nth-of-type(2)").click(function(){
+		var obj = {"background-color":"green", 
+				   "color":"white",
+				   "border":"3px dotted red",
+				   "padding":"15px"};
+		$("button").css(obj);
+ 
+		$("h1").css("background-color","orange");
+	});
+	
+});
+
+</script>
+ 
+
+</head>
+<body>
+<h1>jQuery 라이브러리....연결(다운받아직접,CDN이용)</h1>
+<hr>
+<button>jQuery1</button>
+<button>jQuery2</button>
+<button>jQuery3</button>
+<button>jQuery4</button>
+<button>jQuery5</button>
+<hr>
+<input type="text" value="a">
+<input type="text" value="b">
+<input type="text" value="c">
+<input type="number" value="100">
+<div id="here">여기</div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery-3.7.1.min.js"></script>
+<script>
+$(f_initial);
+function f_initial(){
+	$("button:nth-of-type(1)").click(f_go);
+	$("button:nth-of-type(2)").click(f_go2);
+	$("button:nth-of-type(3)").click(f_go3);
+	$("button:nth-of-type(4)").click(f_go4);
+	$("button:nth-of-type(5)").click(f_go5);
+	$("button:nth-of-type(6)").click(f_go6);
+	$("button:nth-of-type(7)").click(f_go7);
+	$("button:nth-of-type(8)").click(f_go8);
+}
+
+function f_go8() {
+	var xmlStr = 
+		`
+			<friends>
+				<friend>
+					<name>홍길동</name>
+					<phone>010-1234-5678</phone>
+				</friend>
+				<friend>
+					<name>홍길동</name>
+					<phone>010-1234-5678</phone>
+				</friend>
+				<friend>
+					<name>홍길동</name>
+					<phone>010-1234-5678</phone>
+				</friend>
+			</friends>
+		`;
+	console.log(xmlStr);
+	
+	// 객체로 파싱하는법
+	var xmlDoc = $.parseXML(xmlStr);
+	console.log(xmlDoc)
+}
+
+function f_go7() {
+	$("p").eq(0).css("color","red");
+	$("p").eq(-1).css("color","red");
+	$("p").first().css("background-color","orange");
+	$("p").last().css("background-color","orange");
+}
+
+function f_go6() {
+	//end()있으면 filter(":even")의 상위를 의미 $("h2")
+	//end()없으면 filter(":even")중에서 filter(":odd")홀수를 의미 
+	$("h2")
+		.css("background-color", "orange")
+		.filter(":even")
+		.css("color", "red")
+		.end()
+		.filter(":odd")
+		// end 안쓰면 짝수 번째 중에서 홀수 번째가 선택됨 / .end() -> 한단계 위(부모)로 올린다.
+		.css("font-style", "italic");
+	
+}
+
+function f_go5() {
+	$("p:nth-of-type(even)").css("color", "red");
+	$("p").filter(":nth-of-type(odd)").css("color", "blue");
+	
+	// 모든 p들 중 3의 배수인것만 css스타일 표현
+	$("p")
+		.filter(function(index) {
+			console.log(index);
+			return index%3==0; 
+		})
+		.css("border","10px dotted green");
+}
+
+function f_go4() {
+	var obj = {menu : "김밥"};
+	var obj2 = {price : 5000, phone : "010-1234-1234"};
+	// 위 두개를 합치고 싶음
+	$.extend(obj, obj2, {address : "마포구 연남동"});
+	
+	var output = "";
+	$.each(obj, function(key, item){
+		output += 
+			`
+				<p>키: ${key} || 값: ${item}</p>
+			`;
+	});
+	$("#here").html(output);
+}
+
+function f_go3(){
+	//p:nth-of-type(2n)는 p type이 짝수번째라는 의미임
+    $("p:nth-of-type(2n)").addClass("height-light")
+}
+function f_go2(){
+	$("ul li a").each(function(index, item){
+		console.log(index,"번째", item);
+		console.log("content:" + $(item).text(), "속성:"+$(item).attr("href") );
+		console.log("--------------------------");
+	});
+}
+function f_go(){
+	var arr = [{name:"구글", link:"http://www.google.com"}];
+	arr.push({name:"네이버", link:"http://www.naver.com"});
+	arr.push({name:"다음", link:"http://www.daum.net"});
+	var output = "";
+	$.each(arr, function(index, item){
+		output += `<li><a href="${item.link}">${item.name}</a></li>`;
+	});
+	output = `<ul>${output}</ul>`;
+	$("#here").html(output);	
+}
+</script>
+<style>
+p, h2{
+	border: 1px solid green;
+	padding: 5px;
+}
+
+.height-light {
+	background-color: yellow;
+	font-weight: bold;
+	font-size: 20px;
+}
+</style>
+</head>
+<body>
+	<h1>jQuery활용</h1>
+	<button>배열1</button>
+	<button>배열2</button>
+	<button>addClass</button>
+	<button>extend</button>
+	<button>filter</button>
+	<button>filter end</button>
+	<button>위치(eq, first, last)</button>
+	<button>XML파싱</button>
+	<hr>
+	<p>p1</p>
+	<p>p2</p>
+	<p>p3</p>
+	<p>p4</p>
+	<p>p5</p>
+	<hr>
+	<h2>0</h2>
+	<h2>1</h2>
+	<h2>2</h2>
+	<h2>3</h2>
+	<h2>4</h2>
+	<h2>5</h2>
+	<h2>6</h2>
+	<hr>
+	<div id="here">여기</div>
+</body>
+</html>
