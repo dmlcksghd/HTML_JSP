@@ -18,6 +18,58 @@ function f_initial() {
 	$("#btn2").click(f_do2);
 	$("#btn3").click(f_do3);
 	$("#btn4").click(f_do4);
+	$("#btn5").click(f_do5);
+	$("#btn6").click(f_do6);
+	$("#btn7").click(f_do7);
+	$("#btn8").click(f_do8);
+	$("#btn9").click(f_do9);
+	$("#btn10").click(f_do10);
+}
+
+function f_do10() {
+	$("#here").remove();	// 객체지우기
+}
+
+function f_do9() {
+	$("#here").empty();		//내용지우기
+}
+
+function f_do8() {
+	var arr = ["lightgreen", "pink", "orange", "skyblue"];
+	// fontcolor 함수 정의
+    function fontcolor(index) {
+        return arr[index % arr.length]; // 색상 배열 순환
+    }
+    
+    // num 함수 정의
+    function num(index, text) {
+        return `${text} <span>${index + 1}</span>`;
+    }
+    
+    // 각 h1 요소에 대해 작업 수행
+    $("h1").each(function(index, item) {
+        // HTML 업데이트
+        $(item).html(num(index, $(item).text()));
+        
+        // 색상 업데이트
+        $(item).css("color", fontcolor(index));
+    });
+}
+
+function f_do7() {
+	var arr = ["lightgreen", "pink", "orange", "skyblue"];
+	$("h1").css("backgroundColor", function(index) {return arr[index];});
+}
+
+function f_do6() {
+	$("#here img").removeAttr("width");
+	$("#here img").removeAttr("height");
+}
+
+function f_do5() {
+	$("#here img").css("border", function(index) {
+		return (index+2)*2 + "px dotted blue";
+	});
 }
 
 function f_do4() {
@@ -37,7 +89,7 @@ function f_do3() {
 function f_do2(){
 	//setter
 	$("#here img:nth-child(1)").css("border", "5px dotted red");
-	$("#here img:nth-child(1)").attr("width", "250px");
+	$("#here img:nth-child(1)").attr("width", function(index) {return 300*(index+1);});
 	$("#here img:nth-child(1)").attr("height", "250px");
 }
 
@@ -51,11 +103,20 @@ function f_do1(){
 </head>
 <body>
 <h1>jQuery 문서객체 조작</h1>
+<h1>jQuery 문서객체 조작</h1>
+<h1>jQuery 문서객체 조작</h1>
+<h1>jQuery 문서객체 조작</h1>
 <hr>
 <button id="btn1">속성변경1</button>
 <button id="btn2">속성변경2(1)</button>
 <button id="btn3">속성변경3(2)</button>
 <button id="btn4">속성변경4(all)</button>
+<button id="btn5">css변경(all)</button>
+<button id="btn6">속성제거(all)</button>
+<button id="btn7">스타일변경</button>
+<button id="btn8">객체읽기/객체추가</button>
+<button id="btn9">empty</button>
+<button id="btn10">remove</button>
 <hr>
 <div id="here">
 	<img alt="감귤" src="../08_boxModel/images/tangerines.jpg">
