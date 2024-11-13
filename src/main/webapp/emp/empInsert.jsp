@@ -102,7 +102,24 @@ input[type="submit"]:hover {
 	text-decoration: underline;
 }
 </style>
-<script type="text/javascript">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  $(()=>{
+	  $("#myfrm").on("submit", f_submit);
+  });
+  function f_submit(event){
+	  var empobj = $('input[name="employee_id"]');
+	  var empid = $(empobj).val();
+	  if(empid >= 100){
+		  alert("신규 직원번호는 반드시 100보다 작아야합니다.");
+		  event.preventDefault(); //default event취소(서버전송중단)
+		  $(empobj).val("");
+		  $(empobj).focus();
+	  }
+  }
+  
+</script>
+<!-- <script type="text/javascript">
 	//고전이벤트 모델: 객체. 인벤트 속성 = 이벤트핸들러
 	window.onload = function(){
 	  //onsubmit는 default event이다. 이미 이벤트핸들러가 만들어져있다. 
@@ -118,7 +135,7 @@ input[type="submit"]:hover {
 		  } 
 	  };
   };
-</script>
+</script> -->
 </head>
 <body>
 	<div id="contaner">

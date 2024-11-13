@@ -23,42 +23,32 @@ div div {
 	color: #090;
 	border: 5px solid #ff0000;
 }
+
 </style>
+<script src="../jquery-3.7.1.min.js"></script>
 <script>
-	window.onload = function() {
-		//1.
-		document.querySelector("#m_1").style.color = "red";
-		
-		//2.
-		document.querySelector("#m_2").classList.add("active");
-		
-		//3.
-		let images = document.querySelectorAll("#m_3 img:nth-of-type(2n)");
-    	for (let img of images) {
-        	img.src = "ch3.png";
-    	}
-		
-    	//4.
-		let items = document.createElement("p");
-		let text = document.createTextNode("항목4");
-		items.appendChild(text);
-		document.querySelector("#m_4").appendChild(items);
-		
-		// 다른방법
-		// document.querySelector("#m_4").innerHTML += "<p>항목4</p>";
-		
-		//5.
-		let r = document.querySelectorAll("#m_5 p");
-		for (let i = r.length - 1; i >= 0; i--) {
-	        if (r[i].textContent.trim() === "항목4") {
-	            r[i].remove();
-        	}
-    	}
-		
-		//6.
-		var obj = document.querySelector("#m_6");
-		obj.parentNode.removeChild(obj);
-	}
+$(document).ready(function() {
+	//1.
+	$("#m_1").css("color", "red");
+	
+	//2.
+	$("#m_2").addClass("active");
+	
+	//3.#m_3 img:nth-of-type(2n)
+	$("#m_3 img:nth-of-type(odd)").attr("src", "ch3.png");
+	
+	//4.
+	$("#m_4").append("<p>항목4</p>");
+	//$("<p>항목4</p>").appendTo("#m_4");
+	
+	//5.
+	 $("#m_5 p").filter(function() {
+	        return $(this).text().trim() === "항목4";
+	    }).remove();
+	
+	//6.
+	$("#m_6").parent().remove();
+});
 </script>
 </head>
 

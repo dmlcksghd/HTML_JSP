@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+ //JavaScript이용하기(Ajax)
+ $(()=>{
+	$("button:nth-of-type(1)").on("click", f_ajax1); 
+	$("button:nth-of-type(2)").on("click", f_ajax2); 
+	$("button:nth-of-type(3)").on("click", f_ajax3); 
+	$("button:nth-of-type(4)").on("click", f_ajax4); 
+	$("button:nth-of-type(5)").on("click", f_ajax5); 
+	$("button:nth-of-type(6)").on("click", f_ajax6); 
+	$("button:nth-of-type(7)").on("click", f_ajax7); 
+	$("button:nth-of-type(8)").on("click", f_ajax8); 
+	$("button:nth-of-type(9)").on("click", f_ajax9); 
+	$("button:nth-of-type(10)").on("click", f_ajax10); 
+	$("button:nth-of-type(11)").on("click", f_ajax11); 
+ });
+ 
+ function f_ajax11(){
+	 var url = "https://api.bithumb.com/public/ticker/All";
+	 var options = {};
+	 fetch(url, options).then((response)=>{
+		 console.log(response);
+		 return response.json();
+	 }).then((response)=>{
+		 console.log(response);
+		 console.log(response.data.BTC["closing_price"]);
+	 });
+ }
+ 
+ function f_ajax10() {
+	 var url = "js/external.js";
+	 $.getScript(url, function() {
+		 call();
+		 call2();
+	 });
+ }
+ 
+ function f_ajax9(){
+	 var url = "data/DeepQA_data.json";
+	 $.getJSON(url, (response)=>{
+		 $("#here").before(response.data[2].title);
+	 })
+ }
+ function f_ajax8(){
+	 var url = "../emp/empAll.jsp";
+	 var data= {};
+	 $.ajax({
+		 "url" : url,
+		 type:"get",
+		 data : {},
+		 success: function(response, status, xhr){
+			 console.log(response, status, xhr);
+			 $("#here").html(response);
+		 }
+	 });
+	 $.ajax({
+		 "url" :"data/DeepQA_data.json",
+		 type:"post",
+		 data : {},
+		 success: function(response, status, xhr){
+			 console.log(response, status, xhr);
+			 $("#here").before(response.data[2].title);
+		 }
+	 });
+	 
+ }
+ function f_ajax7(){
+	 var url = "../emp/empAll.jsp";
+	 var data= {};
+	 $.post(url,data, callbackMethod);
+	 
+	 var url = "data/DeepQA_data.json"
+	 $.post(url,callbackMethod2);
+	 
+ }
+ 
+ function f_ajax6(){
+	 var url = "../emp/empAll.jsp";
+	 var data= {};
+	 $.get(url,data, callbackMethod);
+	 
+	 var url = "data/DeepQA_data.json"
+	 $.get(url,callbackMethod2);
+	 
+ }
+ 
+ function callbackMethod2(response, status, xhr){
+	 console.log(status);
+	 console.log(xhr);
+	 console.log(response);
+	 $("#here").before(response.data[2].title);
+ }
+ 
+ 
+ function callbackMethod(data, status, xhr){
+	 console.log(status);
+	 console.log(xhr);
+	 
+	 $("#here").html(data);
+ }
+ 
+ 
+ function f_ajax5(){
+	 var url = "../emp/empAll.jsp";
+	 $("#here").load(url);
+ }
+ 
+ function f_ajax4(){
+	 var request = new XMLHttpRequest();
+	 request.onreadystatechange = (event)=>{
+		 console.log(request.readyState, request.status);
+		 if(request.readyState==4 && request.status==200){
+			 console.log(JSON.parse(request.responseText));
+		 }
+	 };
+	 request.open("get","data/DeepQA_data.json", true);
+	 request.send();
+	 //1
+ }
+ 
+ function f_ajax3(){
+	 location.href = "../emp/empAll.jsp";
+ }
+ function f_ajax2(){
+	 var request = new XMLHttpRequest();
+	 request.onreadystatechange = function(event){
+		 console.log(request.readyState);
+		 if(request.readyState==4 && request.status==200){
+			 $("#here").html( request.responseText ); 
+		 }
+	 };
+	 request.open("get","../emp/empAll.jsp", true); //비동기
+	 request.send(); //서버로 간다....비동기이므로 응답을 기다리지않음 
+	 //$("#here").html("아무거나" +  request.responseText ); 
+ }
+ function f_ajax1(){
+	 var request = new XMLHttpRequest();
+	 request.open("get","./001.html", false); //동기
+	 request.send(); //서버로 간다. 
+	 $("#here").html( request.responseText ); 
+ }
+</script>
+</head>
+<body>
+<h1>비동기통신(Ajax)</h1>
+<hr>
+<h2>JavaScript이용</h2>
+<button>동기통신</button>
+<button>비동기통신</button>
+<button>전통적방식(page이동-ajax아님)</button>
+<button>비동기통신(json-data)</button>
+<hr>
+<h2>jQuery이용</h2>
+<button>load()</button>
+<button>get()</button>
+<button>post()</button>
+<button>ajax()</button>
+<button>getJSON()</button>
+<button>getScript()</button>
+<button>fetch</button>
+<hr>
+<div id="here">
+  <img src="images/capetown.jpg">
+</div>
+</body>
+</html>
+
+
+
+
