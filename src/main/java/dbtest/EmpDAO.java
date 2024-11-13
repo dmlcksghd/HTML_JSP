@@ -7,10 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import job.JobDTO;
+import dept.DeptDTO;
 import util.DBUtil;
 
 //DAO(Data Access Object)
@@ -18,150 +19,234 @@ import util.DBUtil;
 //       <--- 
 public class EmpDAO {
 	
-	Connection conn;
-	PreparedStatement st;
-	ResultSet rs;
-	
-	// 1. 특정 부서의 직원 조회 WHERE DEPARTMENT_ID = ?
-		public List<JobDTO> selectAllJob() {
-			String sql = """
-					SELECT *
-					FROM jobs
-					""";
-			List<JobDTO> jobList = new ArrayList<>();
-			conn = DBUtil.getConnection();
-			try {
-				st = conn.prepareStatement(sql);
-				rs = st.executeQuery();
-				while (rs.next()) {
-					JobDTO job = makeJob(rs);
-					jobList.add(job);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				DBUtil.dbDisconnect(conn, st, rs);
-			}
-			return jobList;
-		}
+	public Map<String, Object> selectJoin2(String jobid) {
+		//1.DTO만든다 2.MAP사용한다. 
+		String sql = """
+				select employee_id, first_name, salary, department_name, city, country_name
+				from employees join departments using(department_id)
+				                       join locations using(location_id)
+				                       join countries USING (country_id)
+				where  job_id = ? 
+				""";
+		Map<String, Object> map = new HashMap<>();
+		List<EmpDTO> emplist = new ArrayList<>();
+		List<DeptDTO> deptlist = new ArrayList<>();
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
 		
-		private JobDTO makeJob(ResultSet rs) throws SQLException {
-			JobDTO job = new JobDTO();
-			job.setJob_id(rs.getString("job_id"));
-			job.setJob_title(rs.getString("job_title"));
-			job.setMin_salary(rs.getInt("min_salary"));
-			job.setMax_salary(rs.getInt("max_salary"));
-	        return job;
+		try {
+			st = conn.prepareStatement(sql);
+			st.setString(1, jobid);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				EmpDTO emp = new EmpDTO();
+				emp.setEmployee_id(rs.getInt("Employee_id"));
+				emp.setFirst_name(rs.getString("First_name"));
+				emp.setSalary(rs.getDouble("salary"));
+				emplist.add(emp);
+				
+				DeptDTO dept = new DeptDTO();
+				dept.setDepartment_name(rs.getString("Department_name"));
+				deptlist.add(dept);
+			}
+			map.put("emp", emplist);
+			map.put("dept", deptlist);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.dbDisconnect(conn, st, rs);
 		}
+		return map;
+		
+	}
 	
-	// 1. 특정 부서의 직원 조회	WHERE DEPARTMENT_ID = ?
-	public List<EmpDTO> searchTarget(int deptid) {
-	    String sql = """
-	            SELECT * 
-	            FROM employees 
-	            WHERE department_id = ?
-	            """;
-	    Connection conn = DBUtil.getConnection();
-	    PreparedStatement st = null;
-	    ResultSet rs = null;
-	    List<EmpDTO> empList = new ArrayList<>();
-	    try {
-	        st = conn.prepareStatement(sql);
-	        st.setInt(1, deptid);
-	        rs = st.executeQuery();
-	        while (rs.next()) {
-	            EmpDTO emp = makeEmp(rs);
-	            empList.add(emp);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        DBUtil.dbDisconnect(conn, st, rs);
-	    }
-	    return empList;
+	//Jobs테이블의 모든 data가져오기 
+	public List<JobDTO> selectAllJob() {
+		//1.DTO만든다 2.MAP사용한다. 
+		String sql = """
+				 select * from jobs
+				""";
+		List<JobDTO> joblist = new ArrayList<>();
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			st = conn.prepareStatement(sql);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				JobDTO emp = JobDTO.builder()
+						.job_id(rs.getString("job_id"))
+						.job_title(rs.getString("job_title"))
+						.min_salary(rs.getInt("min_salary"))
+						.max_salary(rs.getInt("max_salary"))
+						.build();
+				joblist.add(emp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.dbDisconnect(conn, st, rs);
+		}
+		return joblist;
+		
+	}
+	
+	public List<EmpJoinDTO> selectJoin(String jobid) {
+		//1.DTO만든다 2.MAP사용한다. 
+		String sql = """
+				select employee_id, first_name, salary, department_name, city, country_name
+				from employees join departments using(department_id)
+				                       join locations using(location_id)
+				                       join countries USING (country_id)
+				where  job_id = ? 
+				""";
+		List<EmpJoinDTO> emplist = new ArrayList<EmpJoinDTO>();
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			st = conn.prepareStatement(sql);
+			st.setString(1, jobid);
+			rs = st.executeQuery();
+			while(rs.next()) {
+				EmpJoinDTO emp = EmpJoinDTO.builder()
+						.city(rs.getString("city"))
+						.employee_id(rs.getInt("employee_id"))
+						.first_name(rs.getString("first_name"))
+						.country_name(rs.getString("country_name"))
+						.department_name(rs.getString("department_name"))
+						.build();
+				emplist.add(emp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.dbDisconnect(conn, st, rs);
+		}
+		return emplist;
+		
+	}
+	
+	
+	
+	
+	//1.특정부서의 직원조회      where department_id = ? 
+	public List<EmpDTO> selectByDept(int dept_id) {
+		// 모든 직원을 조회하기
+		String sql = "select * from employees where department_id = ?" ;
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		List<EmpDTO> emplist = new ArrayList<EmpDTO>();
+		try {
+			st = conn.prepareStatement(sql); //SQL문 준비 
+			st.setInt(1, dept_id);  //?에 값을 채우기 
+			rs = st.executeQuery(); //DB에 가서 실행하고 결과를 가져온다. 
+			while (rs.next()) {
+				EmpDTO emp = makeEmp2(rs);
+				emplist.add(emp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.dbDisconnect(conn, st, rs);
+		}
+		return emplist;
 	}
 
-	// 2. 특정 job_id인 직원 조회	WHERE JOB_ID = ?
+	
+	//2.특정job_id인 직원조회   where job_id = ? 
 	public List<EmpDTO> selectByJob(String job_id) {
-		// 특정 직원을 조회하기
-		String sql = "select * from employees WHERE JOB_ID = ? ";
+		// 모든 직원을 조회하기
+		String sql = "select * from employees where job_id = ?" ;
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		List<EmpDTO> empList = new ArrayList<>();
+		List<EmpDTO> emplist = new ArrayList<EmpDTO>();
 		try {
-			st = conn.prepareStatement(sql);
-			st.setString(1, job_id); 	// ?에 값을 채우기
-			rs = st.executeQuery();	// DB에 가서 실행하고 결과를 가져온다.
-			while (rs.next()) {
-				EmpDTO emp = makeEmp(rs);
-	            empList.add(emp);
+			st = conn.prepareStatement(sql); //SQL문 준비 
+			st.setString(1, job_id);  //?에 값을 채우기 
+			rs = st.executeQuery(); //DB에 가서 실행하고 결과를 가져온다. 
+			while (rs.next()) { //다음data가 있는지?
+				EmpDTO emp = makeEmp2(rs); //한건을 DTO만든다. 
+				emplist.add(emp);          //여러건이므로 Collection에 담기  
 			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			DBUtil.dbDisconnect(conn, st, rs);
 		}
-		return empList;
+		return emplist;
 	}
 	
-	// 3. 급여가 ?이상인 직원 조회		WHERE SALARY >= ?
+	//3.급여가 ?이상인 직원조회   where salary >= ? 
 	public List<EmpDTO> selectBySalary(double salary) {
-		// 특정 직원을 조회하기
-		String sql = "select * from employees WHERE SALARY >= ? ";
+		// 모든 직원을 조회하기
+		String sql = "select * from employees where salary >= ?" ;
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		List<EmpDTO> empList = new ArrayList<>();
+		List<EmpDTO> emplist = new ArrayList<EmpDTO>();
 		try {
-			st = conn.prepareStatement(sql);
-			st.setDouble(1, salary);	// ?에 값을 채우기
-			rs = st.executeQuery();
+			st = conn.prepareStatement(sql); //SQL문 준비 
+			st.setDouble(1, salary);  //?에 값을 채우기 
+			rs = st.executeQuery(); //DB에 가서 실행하고 결과를 가져온다. 
+			while (rs.next()) { //다음data가 있는지?
+				EmpDTO emp = makeEmp2(rs); //한건을 DTO만든다. 
+				emplist.add(emp);          //여러건이므로 Collection에 담기  
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.dbDisconnect(conn, st, rs);
+		}
+		return emplist;
+	}
+	
+	//4.부서, 직책, 급여, 입사일 조건으로 조회 
+	//     where department_id = ? and job_id = ? and salary >= ? and  hire_date >= ?
+	public List<EmpDTO> selectByCondition(Map<String,Object> map) {
+		// 모든 직원을 조회하기
+		String sql = "select * "
+				+ " from employees "
+				+ " where department_id = ? "
+				+ " and job_id = ? "
+				+ " and salary >= ? "
+				+ " and  hire_date >= ?" ;
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		List<EmpDTO> emplist = new ArrayList<EmpDTO>();
+		try {
+			st = conn.prepareStatement(sql); //SQL문 준비 
+			st.setInt(1, (Integer)map.get("department_id"));  //?에 값을 채우기 
+			st.setString(2, (String)map.get("job_id"));  //?에 값을 채우기 
+			st.setDouble(3, (Double)map.get("salary"));  //?에 값을 채우기 
+			st.setDate(4, (Date)map.get("hire_date"));  //?에 값을 채우기 
 			
-			while (rs.next()) {
-				EmpDTO emp = makeEmp(rs);
-	            empList.add(emp);
+			rs = st.executeQuery(); //DB에 가서 실행하고 결과를 가져온다. 
+			while (rs.next()) { //다음data가 있는지?
+				EmpDTO emp = makeEmp2(rs); //한건을 DTO만든다. 
+				emplist.add(emp);          //여러건이므로 Collection에 담기  
 			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			DBUtil.dbDisconnect(conn, st, rs);
 		}
-		return empList;
-	}
-	// 4. 부서, 직책, 급여, 입사일 조건으로 조회	WHERE DEPARTMENT_ID = ? AND JOB_ID = ? AND SALARY = ? AND HIRE_DATE >= ?
-	public List<EmpDTO> selectByCondition(Map<String, Object> map) {
-		// 특정 직원을 조회하기
-		String sql = """
-				select * 
-				from employees 
-				WHERE DEPARTMENT_ID = ? 
-				AND JOB_ID = ? 
-				AND SALARY = ? 
-				AND HIRE_DATE >= ?
-				""";
-		Connection conn = DBUtil.getConnection();
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		List<EmpDTO> empList = new ArrayList<>();
-		try {
-			st = conn.prepareStatement(sql);
-			st.setInt(1, (Integer)map.get("DEPARTMENT_ID"));
-			st.setString(2, (String)map.get("JOB_ID"));
-			st.setDouble(3, (Double)map.get("SALARY"));
-			st.setDate(4, (Date)map.get("HIRE_DATE"));
-			rs = st.executeQuery();
-			while (rs.next()) {
-				EmpDTO emp = makeEmp(rs);
-	            empList.add(emp);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.dbDisconnect(conn, st, rs);
-		}
-		return empList;
-	}
+		return emplist;
+	}	
+	
 	public List<EmpDTO> selectAll() {
 		// 모든 직원을 조회하기
 		String sql = "select * from employees order by 1";
@@ -177,6 +262,7 @@ public class EmpDAO {
 				emplist.add(emp);
 			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			DBUtil.dbDisconnect(conn, st, rs);
@@ -186,7 +272,7 @@ public class EmpDAO {
 
 	public EmpDTO selectById(int empid) {
 		// 특정 직원을 조회하기
-		String sql = "select * from employees where employee_id = " + empid;
+		String sql = "select  *  from employees where employee_id = " + empid;
 		Connection conn = DBUtil.getConnection();
 		Statement st = null;
 		ResultSet rs = null;
@@ -198,6 +284,7 @@ public class EmpDAO {
 				emp = makeEmp(rs);
 			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			DBUtil.dbDisconnect(conn, st, rs);
@@ -229,6 +316,7 @@ public class EmpDAO {
 			result = st.executeUpdate();
 
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			DBUtil.dbDisconnect(conn, st, null);
@@ -274,6 +362,7 @@ public class EmpDAO {
 			result = st.executeUpdate();
 
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			DBUtil.dbDisconnect(conn, st, null);
@@ -297,6 +386,7 @@ public class EmpDAO {
 			result = st.executeUpdate();
 
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			DBUtil.dbDisconnect(conn, st, null);
@@ -305,6 +395,23 @@ public class EmpDAO {
 		return result;
 	}
 
+	private static EmpDTO makeEmp2(ResultSet rs) throws SQLException {
+		EmpDTO emp = EmpDTO.builder()
+				.commission_pct(rs.getDouble("Commission_pct"))
+				.department_id(rs.getInt("Department_id"))
+				.email(rs.getString("email"))
+				.employee_id(rs.getInt("Employee_id"))
+				.first_name(rs.getString("first_name"))
+				.last_name(rs.getString("Last_name"))
+				.hire_date(rs.getDate("Hire_date"))
+				.job_id(rs.getString("job_id"))
+				.manager_id(rs.getInt("Manager_id"))
+				.phone_number(rs.getString("Phone_number"))
+				.salary(rs.getDouble("salary"))
+				.build();
+		return emp;
+	}
+	
 	private static EmpDTO makeEmp(ResultSet rs) throws SQLException {
 		EmpDTO emp = new EmpDTO();
 		emp.setCommission_pct(rs.getDouble("Commission_pct"));
@@ -318,21 +425,8 @@ public class EmpDAO {
 		emp.setManager_id(rs.getInt("Manager_id"));
 		emp.setPhone_number(rs.getString("Phone_number"));
 		emp.setSalary(rs.getDouble("salary"));
+		 
 		return emp;
 	}
-//	private static EmpDTO makeEmp2(ResultSet rs) throws SQLException {
-//		EmpDTO emp = EmpDTO.builder()
-//				.commission_pct(rs.getDouble("Commission_pct"))
-//				.department_id(rs.getInt("Department_id"))
-//				.email(rs.getString("email"))
-//				.first_name(rs.getString("First_name"))
-//				.last_name(rs.getString("Last_name"))
-//				.hire_date(rs.getDate("Hire_date"))
-//				.job_id(rs.getString("job_id"))
-//				.phone_number(rs.getString("Phone_number"))
-//				.salary(rs.getDouble("salary"))
-//				.build();
-//		return emp;
-//	}
 
 }

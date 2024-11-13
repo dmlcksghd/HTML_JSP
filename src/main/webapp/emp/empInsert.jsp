@@ -1,109 +1,64 @@
-<%@page import="job.JobDTO"%>
-<%@page import="job.JobService"%>
+<%@page import="dbtest.JobDTO"%>
 <%@page import="dbtest.EmpDTO"%>
 <%@page import="dbtest.EmpService"%>
-<%@page import="java.util.List"%>
 <%@page import="dept.DeptDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="dept.DeptService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+
 <%
 DeptService dService = new DeptService();
 List<DeptDTO> deptlist = dService.selectAllService();
 
-EmpService eService = new EmpService();
-List<EmpDTO> emplist = eService.selectAllService();
+EmpService empService = new EmpService();
+List<EmpDTO> emplist = empService.selectAllService();
+List<JobDTO> joblist = empService.selectAllJobService();
 
-JobService jService = new JobService();
-List<JobDTO> joblist = jService.selectAllService();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-body {
-	font-family: Arial, sans-serif;
-	background-color: #f9f9f9;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh;
-	margin: 0;
-}
-
-#container {
-	width: 100%;
-	max-width: 500px;
-	padding: 20px;
-	background-color: #fff;
-	border: 1px solid #ddd;
-	border-radius: 8px;
-	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-	box-sizing: border-box;
-}
-
-h1 {
-	text-align: center;
-	font-size: 1.8em;
-	margin-bottom: 20px;
-	color: #333;
-}
-
-.form-group {
-	margin-bottom: 15px;
-}
-
-label {
-	display: block;
-	font-weight: bold;
-	margin-bottom: 5px;
-}
-
-input[type="text"], input[type="number"], input[type="date"], select {
-	width: 100%;
-	padding: 10px;
-	font-size: 1em;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	box-sizing: border-box;
-}
-
-input[type="submit"] {
-	width: 100%;
-	padding: 12px;
-	background-color: #4CAF50;
-	color: white;
-	font-size: 1em;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-weight: bold;
-	margin-top: 20px;
-}
-
-input[type="submit"]:hover {
-	background-color: #45a049;
-}
-
-.link {
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-.link a {
-	color: #333;
-	text-decoration: none;
-	font-size: 0.9em;
-}
-
-.link a:hover {
-	text-decoration: underline;
-}
+  label {
+      background-color: teal;
+      color: white;
+      text-align:center;
+      padding: 5px;
+      margin-bottom:5px;
+      display:inline-block;
+	  width: 100px; /* width속성은 inline에서 사용불가, block요소에서만 가능*/
+  }
+  #container{
+     width: 70%;
+     border: 1px dotted gray;
+     margin: 0 auto;
+  }
+  input, select {
+     width: 200px;
+     box-sizing: border-box;
+     padding: 5px;
+      margin-bottom:5px;
+  }
+  
+  /*
+  .required {
+     border: 3px dotted red;
+  }*/
+  
+  input[class="required"], select[class="required"]{
+   border: 3px dotted blue;
+  }
+  input[type="submit"]{
+     background-color: orange;
+  }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
+  var isDupCheck = false;
   $(()=>{
 	  $("#myfrm").on("submit", f_submit);
   });
@@ -115,13 +70,18 @@ input[type="submit"]:hover {
 		  event.preventDefault(); //default event취소(서버전송중단)
 		  $(empobj).val("");
 		  $(empobj).focus();
+		  return;
+	  }
+	  if(!isDupCheck){
+		  alert("중복체크는 필수입니다.");
+		  event.preventDefault();
 	  }
   }
   
 </script>
 <!-- <script type="text/javascript">
-	//고전이벤트 모델: 객체. 인벤트 속성 = 이벤트핸들러
-	window.onload = function(){
+  //고전이벤트 모델 : 객체.이벤트속성 = 이벤트핸들러  
+  window.onload = function(){
 	  //onsubmit는 default event이다. 이미 이벤트핸들러가 만들어져있다. 
 	  //submit버튼을 누르면 form의 input들이 서버에 전송된다.
 	  //개발자가 이벤트핸들러를 넣으면 먼저수행하고 default이벤트핸들러도 수행된다. 
@@ -129,72 +89,164 @@ input[type="submit"]:hover {
 	  document.querySelector("#myfrm").onsubmit = function(){
 		  var empid = document.querySelector('input[name="employee_id"]').value;
 		  console.log("*" + empid + "*");
-		  if(empid == null || empid.trim() == ""){
+		  //DB:trim("aa ")
+		  //언어:"aa ".trim()
+		  if(empid.trim() == ""){
 			  alert('직원번호는 필수칼럼입니다.');
 			  return false;  
-		  } 
+		  }
+		  
 	  };
   };
 </script> -->
+
+<script>
+  $(function(){
+	  $("#btn_dup").on("click", f_dupCheck);
+	  $("input[name='employee_id']").on("keyup", f_keyup);
+  });
+  function f_keyup(){
+	  var empid = $(this).val().length;
+	  console.log(empid);
+	  if(empid>0){
+		  $("#btn_dup").removeAttr("disabled");
+	  }else{
+		  $("#btn_dup").attr("disabled","disabled");
+	  }
+  }
+  function f_dupCheck(){
+	  var empid = $("input[name='employee_id']").val();
+	  /*
+	  $.ajax({
+		  url:"EmpDupCheck.jsp?empid=" + empid,
+		  type:"get",
+		  success : function(responseData){
+			  $("#here").text(responseData);
+		  }
+	  });*/
+	  $.ajax({
+		  url:"EmpDupCheck.jsp",
+		  type:"post",
+		  data:{"empid" : empid  },
+		  success : function(responseData){
+			  $("#here").text(responseData);
+			  if(responseData.trim()=='NO'){
+				  $("input[name='employee_id']").val("");
+				  $("input[name='employee_id']").focus();
+				  isDupCheck = false;
+			  }else{
+				  isDupCheck = true;
+			  }
+		  }
+	  });
+	  
+  }
+  
+</script>
+ 
 </head>
 <body>
-	<div id="contaner">
-		<a href="empAll.jsp">직원조회</a>
-		<h1>직원등록</h1>
-		<form id="myfrm" empRegister.jsp" method="post"
-			onsubmit="alert('서버가기전'); return false;">
-			<label>직원번호:</label><input type="number" name="employee_id"><br>
+<!-- JSP(Java Server Page) : 
+         동적HTML생성함 
+         HTML + JAVA가능 
+         -->
+<div id="container">
+    
+    <a href="empAll.jsp">직원조회</a>
+	<h1>직원등록</h1>
+	<!-- /로 시작하면 절대경로
+	     /시작 아니면 상대경로 
+	     ./ 생략됨 
+	 -->
+	<form id="myfrm" action="empRegister.jsp"   method="get" >
+		<label>직원번호:</label>
+		<input required="required"    class="required"  type="number" name="employee_id">
+		<span>
+		  <input disabled="disabled" id="btn_dup" type="button" value="중복체크">		  
+		</span>
+		<span id="here">여기</span>
+		<br>
+		
+		<label>부서번호:</label>
+		
+		<select name="department_id">
+		  <%
+		    for(DeptDTO dept:deptlist){
+		  %>
+		     <option value="<%=dept.getDepartment_id() %>" >
+		         <%=dept.getDepartment_name() %>
+		     </option>
+		  <%} %>		
+		</select>
 
-			<label>부서번호:</label> <select name="department_id">
-				<!-- <option value="100">개발부</option> -->
-				<%
-				for (DeptDTO dept : deptlist) {
-				%>
-				<option value="<%=dept.getDepartment_id()%>">
-					<%=dept.getDepartment_name()%>
-				</option>
-				<%
-				}
-				%>
-			</select> <br> <label>상사번호:</label> <select name="manager_id">
-				<%
-				for (EmpDTO emp : emplist) {
-				%>
-				<option value="<%=emp.getManager_id()%>">
-					<%=emp.getFirst_name()%>
-					<%=emp.getLast_name()%>
-				</option>
-
-				<%
-				}
-				%>
-			</select>
-			<!-- <input type="number" name="manager_id"> -->
-
-			<br> <label>급여:</label><input type="number" name="salary"><br>
-			<label>커미션:</label><input type="text" name="commission_pct"><br>
-			<label>이메일:</label><input type="text" name="email"><br>
-			<label>fname:</label><input type="text" name="first_name"><br>
-			<label>lname:</label><input type="text" name="last_name"><br>
-
-			<label>직업 아이디:</label> <select name="job_id">
-				<%
-				for (JobDTO job : joblist) {
-				%>
-				<option value="<%=job.getJob_id()%>">
-					<%=job.getJob_title()%>
-				</option>
-				<%
-				}
-				%>
-			</select>
-			<!-- <input type="text" name="job_id" value="IT_PROG"> -->
-
-			<br> <label>전화번호:</label><input type="text" name="phone_number"><br>
-			<label>입사일:</label><input type="date" name="hire_date"><br>
-			<input type="submit" value="직원저장">
-		</form>
+		<br>
+		<label>상사번호:</label>
+		<select name="manager_id">
+		<%for(EmpDTO emp:emplist){ %>
+		  <option value="<%=emp.getEmployee_id() %>">
+		      <%=emp.getFirst_name() %>
+		      <%=emp.getLast_name() %>
+		  </option>
+		<%} %>  
+		</select>
+		
+		
+		
+		<br>
+		<label>급여:</label>
+		<input type="number" name="salary"><br>
+		<label>커미션:</label>
+		<input type="text" name="commission_pct"><br>
+		<label >이메일:</label>
+		<input required="required"   class="required" type="text" name="email"><br>
+		<label>fname:</label>
+		<input type="text" name="first_name"><br>
+		<label>lname:</label>
+		<input  class="required" type="text" name="last_name"><br>
+		<label>job:</label>
+		 
+		<select  required="required" name="job_id" class="required">
+		   <% for(JobDTO job:joblist){ %>
+		      <option value="<%=job.getJob_id() %>"><%=job.getJob_title() %></option>
+		   <% }%>
+		</select>
+		
+		<br>
+		<label>phone:</label>
+		<input type="text" name="phone_number"><br>
+		<label>입사일:</label>
+		<input required="required" class="required" type="date" name="hire_date"><br>
+		<input type="submit" value="직원저장(submit서버전송go)">
+		<input id="btn_goback" type="button" value="직원저장(서버goback-Ajax)">		
+	</form>
+	<div id="resultPrint">
 	</div>
-
+</div>
+<script>
+ $("#btn_goback").on("click", f_goback);
+ function f_goback(){
+	 var uri = $("#myfrm").serialize();
+	 console.log(uri);
+	 
+	 <%--JSP에서 백틱은 JSP의 ${aa}와 충돌됨....그래서 $를 \$로 사용--%>
+	 $.ajax({
+		 url : `empRegister.jsp?\${uri}`,
+		 type: "get",
+		 success : function(responseData){
+			 console.log(responseData);
+			 $("#resultPrint").html(responseData);
+		 },
+		 error:function(err){
+			 console.log(err);
+		 }
+	 });
+ }
+</script>
 </body>
 </html>
+
+
+
+
+
+

@@ -8,24 +8,30 @@ import java.util.Map;
 public class EmpService {
 
 	EmpDAO empDAO = new EmpDAO();
-	
-	// 특정 부서의 직원 찾기 서비스
-	public List<EmpDTO> searchTargetService(int deptid) {
-	    return empDAO.searchTarget(deptid);
+
+	// Jobs테이블의 모든 data가져오기
+	public List<JobDTO> selectAllJobService() {
+		return empDAO.selectAllJob();
 	}
-	
+
+	//
+	public List<EmpDTO> selectByDept(int dept_id) {
+		return empDAO.selectByDept(dept_id);
+	}
+
 	public List<EmpDTO> selectByJob(String job_id) {
 		return empDAO.selectByJob(job_id);
 	}
-	
+
 	public List<EmpDTO> selectBySalary(double salary) {
 		return empDAO.selectBySalary(salary);
 	}
-	
+
 	public List<EmpDTO> selectByCondition(Map<String, Object> map) {
 		return empDAO.selectByCondition(map);
 	}
 
+	//
 	public List<EmpDTO> selectAllService() {
 		return empDAO.selectAll();
 	}
@@ -50,14 +56,4 @@ public class EmpService {
 	public int deleteService(int empid) {
 		return empDAO.delete(empid);
 	}
-	
-	
-
 }
-
-
-
-
-
-
-

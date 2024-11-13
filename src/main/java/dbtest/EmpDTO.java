@@ -1,6 +1,7 @@
 package dbtest;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,5 +28,6 @@ public class EmpDTO {
 	double commission_pct ;
 	int manager_id;     
 	int department_id  ;
+	 
 	
 }
