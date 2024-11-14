@@ -16,11 +16,15 @@ $(document).ready(function() {
 	//radio button!!
 	$("#a").find("button.default").click(function() {
 		//해당객체가 hover클래스가 없다면 다른객체의 hover는 지우고 자신에게 hover class추가  
-		
+		if(!$(this).hasClass("hover")) {
+			$("#a").find("button.default").removeClass("hover");
+			$(this).addClass("hover");
+		}
 	});
 	//checkbox!!
 	$("#b").find("button.default").click(function() {
 		//있으면 지우고 없으면 추가
+		$(this).toggleClass("hover");
 	});
 });
 </script>

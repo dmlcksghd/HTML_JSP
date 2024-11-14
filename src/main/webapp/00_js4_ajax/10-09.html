@@ -14,6 +14,14 @@ button.hover { background-color: purple; color:yellow; }
 <script type="text/javascript">
 $(document).ready(function() {
 	//hover!!!....addClass, removeClass
+	$("#a").find("button").hover(
+		function() {
+			$(this).addClass("hover");
+		},
+		function() {
+			$(this).removeClass("hover");
+		}
+	);
 	
 });
 </script>

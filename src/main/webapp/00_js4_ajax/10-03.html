@@ -21,6 +21,13 @@ $(document).ready(function() {
 	//#places 자식 element중에서 img검색(find)
 	//src속성에 위의 배열의 순서와 일치하는 이미지를 setting (attr)
 	//alt속성에는 title을 setting한다. 
+	$("#places").find("img").each(function(index) {
+		const url = places[index].image || "images/noimage.jpg";	
+		$(this).attr("src", url);
+		
+		$(this).attr("alt", places[index].title);
+	});
+	
 	 
 	 
 });

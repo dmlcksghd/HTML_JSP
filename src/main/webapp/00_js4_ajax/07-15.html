@@ -10,9 +10,20 @@
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
+$(document).ready(() => {
 	//keyword input의 값이 입력되면 
- 
+ 	$("#keyword").on("input", function() {
+ 		const keyword = $(this).val().toLowerCase();
+ 		$("#nations  tbody tr").filter(function() {
+ 			const countryName = $(this).find("td:nth-child(2)").text().toLowerCase();
+ 			return countryName.includes(keyword);
+ 		}).show();
+ 		
+ 		$("#nations tbody tr").filter(function() {
+ 			const countryName = $(this).find("td:nth-child(2)").text().toLowerCase();
+ 			return !countryName.includes(keyword);
+ 		}).hide();
+ 	});
 });
 </script>
 </head>

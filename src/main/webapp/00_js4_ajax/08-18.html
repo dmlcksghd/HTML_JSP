@@ -6,8 +6,10 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	//각각의 버튼을 클릭하면 버튼의 value을 보여준다...(js와 jq비교) 
-	
+	//각각의 버튼을 클릭하면 버튼의 value을 보여준다...(js와 jq비교)
+	$(".test").on("click", function() {
+		alert($(this).val());
+	});
 });
 </script>
 </head>

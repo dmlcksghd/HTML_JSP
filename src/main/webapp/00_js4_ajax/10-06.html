@@ -6,9 +6,17 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	//#toggle버튼을 클릭하면  content아래의 input중에서 class가 type인것을 find하여 
+	//#toggle버튼을 클릭하면  content아래의 input중에서 class가 test인것을 find하여 
 	//enabled상태이면 (is) disabled시키고 아니면 이 속성을 지운다. (removeAttr)
-	 
+	$("#toggle").on("click", function() {
+		$("#content").find("input.test").each(function() {
+			if($(this).is(":enabled")) {
+				$(this).attr("disabled", "disabled");
+			} else {
+				$(this).removeAttr("disabled");
+			}
+		});
+	});
 });
 </script>
 </head>

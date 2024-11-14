@@ -8,7 +8,15 @@
 $(document).ready(function() {
 	
 	//save버튼을 누르면 선택된 과일들의 값을 list에 나열합니다. (map, get, join)
-	
+	$("#save").on("click", function() {
+		const select = $(".fruit:checked")
+			.map(function() {
+				return $(this).val();
+			}).get()
+			.join(", ");
+		
+		$("#list").text(select || "선택된 과일이 없습니다.");
+	});
 	
 	
 });

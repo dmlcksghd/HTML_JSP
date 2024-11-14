@@ -11,8 +11,12 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    $("5의 배수인 tr").css("background-color", "aqua");
-    $("tr:nth-of-type(even)").css("font-weight", "bold");
+    $("#nations tr")
+    	.filter(function() {
+    		const number = parseInt($(this).find("td:first").text());
+    		return number % 5 === 0;
+    	}).css("background-color", "aqua");
+    $("#nations tr:nth-of-type(even)").css("font-weight", "bold");
 });
 </script>
 </head>
