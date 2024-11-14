@@ -3,8 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+//(document) 인데 ()로 써도됨, document 생략가능
+$(function() {
+	$("button:nth-of-type(1)").on("click", f1);
+	$("button:nth-of-type(2)").on("click", f3);
+	$("#btnSave").on("click", f_save3)
+});
+
+
+
+function f_save3() {
+	var uri = $("form").serializeArray();
+	var dataObj = {};
+	console.log(uri);
+	for(let i in arr) {
+		dataObj[arr[i].name] = arr[i].value;
+	}
+	$.ajax({
+		url:"../dept/deptRegister.jsp?",
+		data:dataObj,
+		type:"post",
+		success:function(responseHTML) {
+			$("#here").html(responseHTML);
+		}
+	});
+}
+
+function f_save2() {
+	//department_id=11&department_name=%EC%8B%A0%ED%95%9CDS&manager_id=100&location_id=1700
+	var uri = $("form").serialize();
+	var dataObj = {};
+	console.log(uri);
+	var arr = uri.split("&");
+	for(let i=0; i<arr.length; i++) {
+		var arr2 = arr[i].split("=");
+		dataObj[arr2[0]] = arr2[1];
+		if(arr2[0] == 'department_name') {
+			dataObj["department_name"] = decodeURIComponent(arr2[1]);
+		}
+	}
+	console.log(dataObj);
+	$.ajax({
+		url:"../dept/deptRegister.jsp?",
+		data:dataObj,
+		type:"get",
+		success:function(responseHTML) {
+			$("#here").html(responseHTML);
+		}
+	});
+}
+
+function f_save() {
+	//department_id=11&department_name=%EC%8B%A0%ED%95%9CDS&manager_id=100&location_id=1700
+	var uri = $("form").serialize();
+	console.log(uri);
+	$.ajax({
+		url:"../dept/deptRegister.jsp?" + uri,
+		type:"get",
+		success:function(responseHTML) {
+			$("#here").html(responseHTML);
+		}
+	});
+}
+
+function f3() {
+	var url = "../emp/empDetail.jsp";
+	var data = { empid: $("#empid").val() };
+	console.log(url);
+	console.log(data);
+	$.ajax({
+		url:url,
+		type:"get",
+		data:data,
+		success:function(result) {
+			$("#here").html(result);
+		}
+	});
+}
+
+function f2() {
+	var url = "../emp/empDetail.jsp?empid=" + $("#empid").val();
+	console.log(url);
+	$.ajax({
+		url:url,
+		type:"get",
+		success:function(result) {
+			$("#here").html(result);
+		},
+		error:function(err) {
+			alert(err);
+		}
+	});
+}
+
+function f1() {
+	$.ajax({
+		url:"../emp/empAll.jsp",
+		type:"get",
+		success:function(responseData){
+			$("#here").html(responseData);
+		},
+		error:function(err){
+			alert(err);
+		}
+	});
+}
+</script>
 </head>
 <body>
-
+<h1>Ajax(비동기통신) jQuery이용</h1>
+<hr>
+<button>직원조회</button>
+<br>
+<input id="empid" value="100">
+<button>직원상세</button>
+<hr>
+<div>
+	<form action="../dept/deptRegister.jsp">
+		부서id : <input type="text" name="department_id" value="11"><br>
+		부서name : <input type="text" name="department_name" value="신한DS"><br>
+		mid : <input type="text" name="manager_id" value="100"><br>
+		location id : <input type="text" name="location_id" value="1700"><br>
+		<input type="submit" value="서버전송(submit)">
+		<input type="button" id="btnSave" value="서버전송(submit)">
+	</form>
+</div>
+<div id="here">결과</div>
 </body>
 </html>
